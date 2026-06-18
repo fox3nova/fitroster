@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="en" data-language="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitRoster is a professional iOS training log and coach-trainee workout planning app with no subscription required.">
+  <meta name="theme-color" content="#101010">
+  <link rel="icon" href="assets/start-silver-fitroster.png" type="image/png">
+  <title>FitRoster | Professional Training Log for Coaches and Trainees</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --black: #0b0b0d;
+      --black-soft: #151518;
+      --ink: #141414;
+      --steel: #7d858f;
+      --muted: #66707b;
+      --silver: #d8dde3;
+      --silver-strong: #f3f5f7;
+      --line: #dce1e7;
+      --paper: #f5f5f2;
+      --white: #ffffff;
+      --gold: #c59b4b;
+      --gold-deep: #9f742b;
+      --blue: #2b65f6;
+      --green: #19a974;
+      --shadow: 0 32px 100px rgba(7, 8, 10, 0.22);
+      --tight: "Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif;
+      --body: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+      font-family: var(--body);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 14% 4%, rgba(197, 155, 75, 0.22), transparent 28%),
+        radial-gradient(circle at 86% 10%, rgba(216, 221, 227, 0.32), transparent 26%),
+        linear-gradient(90deg, rgba(11, 11, 13, 0.055) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(11, 11, 13, 0.055) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, auto, 56px 56px, 56px 56px, auto;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .shell {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 50;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      width: min(1200px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      color: #fff;
+      background: rgba(11, 11, 13, 0.82);
+      box-shadow: 0 22px 62px rgba(0, 0, 0, 0.26);
+      backdrop-filter: blur(22px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      outline-offset: 5px;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 14px 34px rgba(216, 221, 227, 0.18);
+    }
+
+    .brand-name {
+      font-family: var(--tight);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-links a {
+      outline-offset: 7px;
+      transition: color 180ms ease-out;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #fff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .language-switch button {
+      min-width: 42px;
+      min-height: 32px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.70);
+      background: transparent;
+      font: 800 12px / 1 var(--body);
+      cursor: pointer;
+      transition: color 180ms ease-out, background-color 180ms ease-out, box-shadow 180ms ease-out;
+    }
+
+    .language-switch button:hover,
+    .language-switch button:focus-visible {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      color: var(--black);
+      background: linear-gradient(135deg, #fff, var(--silver));
+      box-shadow: 0 8px 20px rgba(216, 221, 227, 0.18);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      outline-offset: 4px;
+      transition: background-color 200ms ease-out, border-color 200ms ease-out, color 200ms ease-out, box-shadow 200ms ease-out;
+    }
+
+    .button svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .button.primary {
+      color: var(--black);
+      background: linear-gradient(135deg, #fff, var(--silver));
+      box-shadow: 0 16px 36px rgba(216, 221, 227, 0.20);
+    }
+
+    .button.primary:hover,
+    .button.primary:focus-visible {
+      color: #fff;
+      background: var(--gold-deep);
+      box-shadow: 0 18px 42px rgba(159, 116, 43, 0.26);
+    }
+
+    .button.dark {
+      color: #fff;
+      background: var(--black);
+      box-shadow: 0 16px 36px rgba(11, 11, 13, 0.18);
+    }
+
+    .button.dark:hover,
+    .button.dark:focus-visible {
+      background: var(--gold-deep);
+    }
+
+    .button.secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.78);
+      border-color: var(--line);
+    }
+
+    .button.secondary:hover,
+    .button.secondary:focus-visible {
+      border-color: rgba(197, 155, 75, 0.55);
+      color: var(--gold-deep);
+      background: #fff;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      padding: 132px 0 86px;
+      color: #fff;
+      background:
+        linear-gradient(115deg, rgba(11, 11, 13, 0.98) 0%, rgba(11, 11, 13, 0.93) 48%, rgba(31, 31, 35, 0.86) 100%),
+        radial-gradient(circle at 74% 16%, rgba(216, 221, 227, 0.26), transparent 34%),
+        var(--black);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 92px -12vw auto auto;
+      width: min(56vw, 740px);
+      height: min(56vw, 740px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 42px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(197, 155, 75, 0.14), rgba(255, 255, 255, 0.04));
+      transform: rotate(8deg);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(520px, 1.18fr);
+      align-items: center;
+      gap: 56px;
+    }
+
+    .hero-content {
+      min-width: 0;
+    }
+
+    .hero-logo {
+      width: 208px;
+      height: auto;
+      margin-bottom: 28px;
+      object-fit: contain;
+      filter: drop-shadow(0 26px 58px rgba(216, 221, 227, 0.22));
+    }
+
+    .eyebrow,
+    .section-kicker {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    h1,
+    .section-heading,
+    .cta-panel h2 {
+      font-family: var(--tight);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 560px;
+      font-size: 88px;
+      line-height: 0.94;
+      text-transform: none;
+    }
+
+    .hero-statement {
+      max-width: 640px;
+      margin-top: 18px;
+      color: #fff;
+      font-family: var(--tight);
+      font-size: 36px;
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 660px;
+      margin-top: 18px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 21px;
+      line-height: 1.48;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .value-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      width: min(720px, 100%);
+      margin-top: 42px;
+    }
+
+    .value-item {
+      min-height: 104px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 18px 54px rgba(0, 0, 0, 0.12);
+    }
+
+    .value-item strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--tight);
+      font-size: 30px;
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .value-item span {
+      color: rgba(255, 255, 255, 0.70);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .hero-device {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 34px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-device img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      max-height: 660px;
+      border-radius: 22px;
+      object-fit: contain;
+      background: #f4f7fb;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+    }
+
+    .hero-device .screen-label {
+      top: 30px;
+      left: 30px;
+    }
+
+    section {
+      padding: 92px 0;
+    }
+
+    .section-heading {
+      max-width: 860px;
+      margin-top: 14px;
+      font-size: 58px;
+      line-height: 1.02;
+    }
+
+    .section-copy {
+      max-width: 760px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.66;
+      font-weight: 600;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 38px;
+    }
+
+    .trust-card,
+    .feature-card,
+    .guide-card,
+    .screen-card,
+    .workflow-card {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 20px 58px rgba(11, 11, 13, 0.08);
+    }
+
+    .trust-card {
+      min-height: 136px;
+      padding: 22px;
+    }
+
+    .trust-card svg,
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .trust-card svg {
+      color: var(--gold-deep);
+      margin-bottom: 18px;
+    }
+
+    .trust-card h3,
+    .feature-card h3,
+    .guide-card h3,
+    .workflow-card h3 {
+      font-size: 23px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .trust-card p,
+    .feature-card p,
+    .guide-card p,
+    .workflow-card p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.58;
+      font-weight: 600;
+    }
+
+    .screens {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(227, 231, 235, 0.95) 24%, rgba(227, 231, 235, 0.98));
+    }
+
+    .screens-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 24px;
+    }
+
+    .capture-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid rgba(25, 169, 116, 0.22);
+      border-radius: 999px;
+      color: #0f6f4b;
+      background: rgba(25, 169, 116, 0.10);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .capture-badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .screen-block {
+      margin-top: 46px;
+    }
+
+    .screen-block h3 {
+      font-family: var(--tight);
+      font-size: 50px;
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .screen-grid.ipad-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .screen-grid.ipad-grid .screen-card {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .screen-card {
+      padding: 16px;
+    }
+
+    .screen-card figure {
+      position: relative;
+      margin: 0;
+      overflow: hidden;
+      border-radius: 22px;
+      background: #f5f8fc;
+    }
+
+    .screen-card img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #f5f8fc;
+    }
+
+    .screen-card figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .screen-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(11, 11, 13, 0.76);
+      font-size: 12px;
+      font-weight: 800;
+      backdrop-filter: blur(10px);
+    }
+
+    .features {
+      background: var(--paper);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 38px;
+    }
+
+    .feature-card {
+      min-height: 278px;
+      padding: 28px;
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      margin-bottom: 28px;
+      border-radius: 16px;
+      color: var(--gold-deep);
+      background: #fff4db;
+    }
+
+    .feature-card:nth-child(2) .feature-icon,
+    .feature-card:nth-child(5) .feature-icon {
+      color: #0f766e;
+      background: #e7f8f1;
+    }
+
+    .feature-card:nth-child(3) .feature-icon,
+    .feature-card:nth-child(6) .feature-icon {
+      color: #1d4ed8;
+      background: #eaf2ff;
+    }
+
+    .workflow {
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%),
+        var(--black);
+    }
+
+    .workflow .section-copy {
+      color: rgba(255, 255, 255, 0.70);
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 38px;
+    }
+
+    .workflow-card {
+      min-height: 220px;
+      padding: 24px;
+      border-color: rgba(255, 255, 255, 0.13);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: none;
+    }
+
+    .workflow-card .step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 24px;
+      border-radius: 999px;
+      color: var(--black);
+      background: linear-gradient(135deg, #fff, var(--silver));
+      font-weight: 800;
+    }
+
+    .workflow-card p {
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .guide {
+      background: #fffaf0;
+    }
+
+    .guide-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .guide-panel {
+      position: sticky;
+      top: 116px;
+      padding: 30px;
+      border: 1px solid #ead7bd;
+      border-radius: 28px;
+      background: #fff;
+      box-shadow: 0 20px 56px rgba(116, 73, 20, 0.10);
+    }
+
+    .guide-panel .button {
+      margin-top: 26px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .guide-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 22px;
+    }
+
+    .guide-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .locale-code,
+    .guide-state {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .locale-code {
+      color: var(--ink);
+      background: #eef1f4;
+    }
+
+    .guide-state {
+      color: #0f6f3c;
+      background: #e8f8ee;
+    }
+
+    .guide-card[data-guide-state="planned"] .guide-state {
+      color: #7a531e;
+      background: #fff1db;
+    }
+
+    .button.disabled,
+    .button[aria-disabled="true"] {
+      color: var(--steel);
+      background: #eef1f4;
+      border-color: var(--line);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .release {
+      background: var(--paper);
+    }
+
+    .cta-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 28px;
+      padding: 40px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(197, 155, 75, 0.13), transparent 36%),
+        #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-panel h2 {
+      font-size: 56px;
+      line-height: 1.02;
+    }
+
+    .cta-panel p {
+      max-width: 700px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.62;
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 34px 0 46px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      background: #fff;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-row a {
+      color: var(--gold-deep);
+      outline-offset: 6px;
+    }
+
+    @media (max-width: 1080px) {
+      .topbar {
+        grid-template-columns: auto auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid,
+      .guide-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: 72px;
+      }
+
+      .hero-statement {
+        font-size: 32px;
+      }
+
+      .hero-device img {
+        max-height: none;
+      }
+
+      .trust-strip,
+      .feature-grid,
+      .workflow-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .screen-grid,
+      .screen-grid.ipad-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screen-card {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .screen-grid.ipad-grid .screen-card {
+        max-width: 900px;
+      }
+
+      .guide-panel {
+        position: static;
+      }
+
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 28px, 1200px);
+      }
+
+      .topbar {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        padding: 8px;
+      }
+
+      .brand img {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+      }
+
+      .brand-name {
+        display: none;
+      }
+
+      .language-switch button {
+        min-width: 36px;
+        padding: 0 8px;
+      }
+
+      .button {
+        min-height: 42px;
+        padding: 0 14px;
+      }
+
+      .nav-actions > .button {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 104px;
+      }
+
+      .hero-logo {
+        width: 156px;
+      }
+
+      h1 {
+        font-size: 56px;
+      }
+
+      .hero-statement {
+        font-size: 26px;
+        line-height: 1.12;
+      }
+
+      .hero-copy {
+        font-size: 18px;
+      }
+
+      .value-row,
+      .trust-strip,
+      .feature-grid,
+      .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 68px 0;
+      }
+
+      .section-heading {
+        font-size: 40px;
+        line-height: 1.05;
+      }
+
+      .screen-block h3,
+      .cta-panel h2 {
+        font-size: 38px;
+        line-height: 1.04;
+      }
+
+      .screens-head {
+        grid-template-columns: 1fr;
+      }
+
+      .screen-card,
+      .feature-card,
+      .trust-card,
+      .guide-card,
+      .workflow-card,
+      .guide-panel,
+      .cta-panel {
+        padding: 22px;
+      }
+
+      .guide-card {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" aria-label="Primary navigation" data-i18n-attr="aria-label:navAria">
+    <a class="brand" href="#top" aria-label="FitRoster home" data-i18n-attr="aria-label:brandAria">
+      <img src="assets/start-silver-fitroster.png" width="1024" height="1024" alt="" aria-hidden="true">
+      <span class="brand-name">FitRoster</span>
+    </a>
+    <nav class="nav-links" aria-label="Page sections" data-i18n-attr="aria-label:sectionNavAria">
+      <a href="#screens" data-i18n="navScreens">Screens</a>
+      <a href="#features" data-i18n="navFeatures">Features</a>
+      <a href="#guide" data-i18n="navGuide">Guide</a>
+      <a href="#release" data-i18n="navRelease">Release</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="button primary" href="#release">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="navCta">Release info</span>
+      </a>
+      <div class="language-switch" aria-label="Language" data-i18n-attr="aria-label:languageLabel">
+        <button type="button" data-language-option="en" aria-pressed="true">EN</button>
+        <button type="button" data-language-option="zh-Hans" aria-pressed="false">简</button>
+        <button type="button" data-language-option="zh-Hant" aria-pressed="false">繁</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero-grid">
+        <div class="hero-content">
+          <img class="hero-logo" src="assets/start-silver-fitroster.png" width="1024" height="1024" alt="FitRoster">
+          <p class="eyebrow" data-i18n="heroEyebrow">Official iOS training release</p>
+          <h1 id="hero-title" data-i18n="heroTitle">FitRoster</h1>
+          <p class="hero-statement" data-i18n="heroStatement">Professional coaching, trainee schedules, and training records. No subscription required.</p>
+          <p class="hero-copy" data-i18n="heroCopy">FitRoster brings workout planning, session records, training analysis, and coach-trainee collaboration into one polished iOS workspace.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#screens">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 5h12v14H6zM9 9h6M9 13h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="heroPrimary">View full screenshots</span>
+            </a>
+            <a class="button secondary" href="#guide">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 4h9l3 3v13H6zM14 4v4h4M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="heroSecondary">Read usage guide</span>
+            </a>
+          </div>
+          <div class="value-row" aria-label="Product highlights" data-i18n-attr="aria-label:valueAria">
+            <div class="value-item">
+              <strong data-i18n="valueNoSubTitle">No Subscription</strong>
+              <span data-i18n="valueNoSubCopy">Core workflow without recurring subscription pressure</span>
+            </div>
+            <div class="value-item">
+              <strong data-i18n="valueRolesTitle">Coach + Trainee</strong>
+              <span data-i18n="valueRolesCopy">Role-aware planning, review, and delivery flows</span>
+            </div>
+            <div class="value-item">
+              <strong data-i18n="valueDevicesTitle">iPhone + iPad</strong>
+              <span data-i18n="valueDevicesCopy">Complete release screenshots captured from Simulator</span>
+            </div>
+          </div>
+        </div>
+
+        <figure class="hero-device">
+          <span class="screen-label" data-i18n="screenIpadTraining">iPad Training</span>
+          <img src="assets/ipad-training.jpg" width="2752" height="2064" alt="Full landscape iPad FitRoster training screen captured from Simulator" data-i18n-attr="alt:altIpadTraining">
+        </figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="positioning-title">
+      <div class="shell">
+        <p class="section-kicker" data-i18n="positioningKicker">Built for serious training work</p>
+        <h2 id="positioning-title" class="section-heading" data-i18n="positioningTitle">A release-ready training system for planning, logging, reviewing, and coaching.</h2>
+        <p class="section-copy" data-i18n="positioningCopy">FitRoster is designed for trainers, athletes, and self-managed trainees who need structure without turning training data into a spreadsheet project.</p>
+        <div class="trust-strip">
+          <article class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M7 4v16M17 4v16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3 data-i18n="trustPlansTitle">Structured workout plans</h3>
+            <p data-i18n="trustPlansCopy">Create reusable programs and keep planned work separate from completed records.</p>
+          </article>
+          <article class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0Zm11 5 3 3-3 3m-5-2h8M4 20a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3 data-i18n="trustCoachTitle">Coach and trainee support</h3>
+            <p data-i18n="trustCoachCopy">Send plans, review trainee progress, and keep collaboration inside the training context.</p>
+          </article>
+          <article class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 17 10 12l3 3 6-8M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3 data-i18n="trustAnalysisTitle">Useful analysis</h3>
+            <p data-i18n="trustAnalysisCopy">Review volume, records, muscle distribution, goals, and body-composition context.</p>
+          </article>
+          <article class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v18M5 7h14M7 12h10M9 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3 data-i18n="trustNoSubTitle">No subscription required</h3>
+            <p data-i18n="trustNoSubCopy">A clear release message for users who want durable tools, not another recurring plan.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="screens" class="screens" aria-labelledby="screens-title">
+      <div class="shell">
+        <div class="screens-head">
+          <div>
+            <p class="section-kicker" data-i18n="screensKicker">Complete simulator screenshots</p>
+            <h2 id="screens-title" class="section-heading" data-i18n="screensTitle">iPhone and iPad screens are shown as complete captures.</h2>
+            <p class="section-copy" data-i18n="screensCopy">No mockups, no cropped screen contents. These images preserve the full captured app screen, including status areas and bottom navigation.</p>
+          </div>
+          <span class="capture-badge">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span data-i18n="captureBadge">Captured from Simulator</span>
+          </span>
+        </div>
+
+        <div class="screen-block">
+          <h3 data-i18n="iphoneScreensTitle">iPhone</h3>
+          <div class="screen-grid" aria-label="Full iPhone screenshots" data-i18n-attr="aria-label:iphoneScreensAria">
+            <article class="screen-card">
+              <figure>
+                <span class="screen-label" data-i18n="screenTraining">Training</span>
+                <img src="assets/iphone-training.jpg" width="1206" height="2622" alt="Full iPhone FitRoster training screen captured from Simulator" data-i18n-attr="alt:altIphoneTraining">
+                <figcaption><span data-i18n="screenTraining">Training</span><span>iPhone</span></figcaption>
+              </figure>
+            </article>
+            <article class="screen-card">
+              <figure>
+                <span class="screen-label" data-i18n="screenRecords">Records</span>
+                <img src="assets/iphone-records.jpg" width="1206" height="2622" alt="Full iPhone FitRoster records screen captured from Simulator" data-i18n-attr="alt:altIphoneRecords">
+                <figcaption><span data-i18n="screenRecords">Records</span><span>iPhone</span></figcaption>
+              </figure>
+            </article>
+            <article class="screen-card">
+              <figure>
+                <span class="screen-label" data-i18n="screenAnalysis">Analysis</span>
+                <img src="assets/iphone-analysis.jpg" width="1206" height="2622" alt="Full iPhone FitRoster analysis screen captured from Simulator" data-i18n-attr="alt:altIphoneAnalysis">
+                <figcaption><span data-i18n="screenAnalysis">Analysis</span><span>iPhone</span></figcaption>
+              </figure>
+            </article>
+          </div>
+        </div>
+
+        <div class="screen-block">
+          <h3 data-i18n="ipadScreensTitle">iPad</h3>
+          <div class="screen-grid ipad-grid" aria-label="Full iPad screenshots" data-i18n-attr="aria-label:ipadScreensAria">
+            <article class="screen-card">
+              <figure>
+                <span class="screen-label" data-i18n="screenTraining">Training</span>
+                <img src="assets/ipad-training.jpg" width="2752" height="2064" alt="Full landscape iPad FitRoster training screen captured from Simulator" data-i18n-attr="alt:altIpadTraining">
+                <figcaption><span data-i18n="screenTraining">Training</span><span>iPad</span></figcaption>
+              </figure>
+            </article>
+            <article class="screen-card">
+              <figure>
+                <span class="screen-label" data-i18n="screenRecords">Records</span>
+                <img src="assets/ipad-records.jpg" width="2752" height="2064" alt="Full landscape iPad FitRoster records screen captured from Simulator" data-i18n-attr="alt:altIpadRecords">
+                <figcaption><span data-i18n="screenRecords">Records</span><span>iPad</span></figcaption>
+              </figure>
+            </article>
+            <article class="screen-card">
+              <figure>
+                <span class="screen-label" data-i18n="screenAnalysis">Analysis</span>
+                <img src="assets/ipad-analysis.jpg" width="2752" height="2064" alt="Full landscape iPad FitRoster analysis screen captured from Simulator" data-i18n-attr="alt:altIpadAnalysis">
+                <figcaption><span data-i18n="screenAnalysis">Analysis</span><span>iPad</span></figcaption>
+              </figure>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features" aria-labelledby="features-title">
+      <div class="shell">
+        <p class="section-kicker" data-i18n="featuresKicker">Core capabilities</p>
+        <h2 id="features-title" class="section-heading" data-i18n="featuresTitle">Everything important for coaching, self-training, and progress review.</h2>
+        <p class="section-copy" data-i18n="featuresCopy">The release page highlights what makes FitRoster practical: structured plans, clear records, coach-trainee delivery, analysis, backup, and no subscription requirement.</p>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M8 5h8M8 12h8M8 19h8M4 5h.01M4 12h.01M4 19h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 data-i18n="featurePlanTitle">Reusable workout plans</h3>
+            <p data-i18n="featurePlanCopy">Build training plans, duplicate templates, edit movements, and keep recurring programs organized.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 7h16M6 11h12M8 15h8M10 19h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 data-i18n="featureCoachTitle">Coach and trainee schedules</h3>
+            <p data-i18n="featureCoachCopy">Support coach-assigned plans, trainee views, and role-specific surfaces without mixing workflows.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 3v3M17 3v3M4 8h16v12H4zM8 12h3M13 12h3M8 16h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 data-i18n="featureRecordsTitle">Training calendar records</h3>
+            <p data-i18n="featureRecordsCopy">Review completed sessions by day, week, or month and keep training history easy to inspect.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 17 10 12l3 3 6-8M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 data-i18n="featureAnalysisTitle">Analysis and goals</h3>
+            <p data-i18n="featureAnalysisCopy">Track interval KPIs, body data, goals, muscle distribution, and progress signals from one analysis surface.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 4v16M5 8h14M7 12h10M9 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 data-i18n="featureNoSubTitle">No subscription required</h3>
+            <p data-i18n="featureNoSubCopy">Present FitRoster as a focused professional tool without recurring subscription friction.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 17.5A4.5 4.5 0 0 1 7.2 8.7 6 6 0 0 1 18.7 11 3.5 3.5 0 0 1 18 18H7m5-6v8m0 0 3-3m-3 3-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 data-i18n="featureSyncTitle">iCloud sync and backup</h3>
+            <p data-i18n="featureSyncCopy">Support coach-trainee sync, file backup, and release-grade data portability workflows.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow" aria-labelledby="workflow-title">
+      <div class="shell">
+        <p class="section-kicker" data-i18n="workflowKicker">Training workflow</p>
+        <h2 id="workflow-title" class="section-heading" data-i18n="workflowTitle">Built around the real training loop.</h2>
+        <p class="section-copy" data-i18n="workflowCopy">FitRoster keeps the release story simple: plan the work, complete the session, review the results, then share what matters.</p>
+        <div class="workflow-grid">
+          <article class="workflow-card">
+            <span class="step">01</span>
+            <h3 data-i18n="workflowPlanTitle">Plan</h3>
+            <p data-i18n="workflowPlanCopy">Create templates and structured routines for repeatable training blocks.</p>
+          </article>
+          <article class="workflow-card">
+            <span class="step">02</span>
+            <h3 data-i18n="workflowTrainTitle">Train</h3>
+            <p data-i18n="workflowTrainCopy">Record sets, load, reps, bodyweight context, and completed sessions clearly.</p>
+          </article>
+          <article class="workflow-card">
+            <span class="step">03</span>
+            <h3 data-i18n="workflowReviewTitle">Review</h3>
+            <p data-i18n="workflowReviewCopy">Use records, charts, and analysis views to decide the next training step.</p>
+          </article>
+          <article class="workflow-card">
+            <span class="step">04</span>
+            <h3 data-i18n="workflowCoachTitle">Coach</h3>
+            <p data-i18n="workflowCoachCopy">Keep coach and trainee communication tied to the plan, not scattered messages.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="guide" class="guide" aria-labelledby="guide-title">
+      <div class="shell guide-layout">
+        <div class="guide-panel">
+          <p class="section-kicker" data-i18n="guideKicker">Usage guide</p>
+          <h2 id="guide-title" class="section-heading" data-i18n="guideTitle">Release users should have clear documentation from day one.</h2>
+          <p class="section-copy" data-i18n="guideCopy">The guide library is ready for multiple languages. Traditional Chinese is available now, with English and Simplified Chinese slots reserved for future PDFs.</p>
+          <a class="button dark" href="assets/guides/FitRoster_User_Guide_zh-Hant.pdf" download>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span data-i18n="guidePrimaryDownload">Download current PDF</span>
+          </a>
+        </div>
+
+        <div class="guide-grid" aria-label="Available usage guides" data-i18n-attr="aria-label:guideGridAria">
+          <article class="guide-card" data-guide-state="planned">
+            <div>
+              <div class="guide-meta">
+                <span class="locale-code">EN</span>
+                <span class="guide-state" data-i18n="guidePlanned">Reserved</span>
+              </div>
+              <h3 data-i18n="guideEnglishTitle">English Usage Guide</h3>
+              <p data-i18n="guideEnglishCopy">Reserved for the English PDF version when release documentation is localized.</p>
+            </div>
+            <span class="button disabled" aria-disabled="true" data-i18n="guideComingSoon">Coming soon</span>
+          </article>
+
+          <article class="guide-card" data-guide-state="planned">
+            <div>
+              <div class="guide-meta">
+                <span class="locale-code">简中</span>
+                <span class="guide-state" data-i18n="guidePlanned">Reserved</span>
+              </div>
+              <h3 data-i18n="guideHansTitle">Simplified Chinese Usage Guide</h3>
+              <p data-i18n="guideHansCopy">Reserved for the Simplified Chinese PDF version, keeping the file structure ready for localization.</p>
+            </div>
+            <span class="button disabled" aria-disabled="true" data-i18n="guideComingSoon">Coming soon</span>
+          </article>
+
+          <article class="guide-card" data-guide-state="available">
+            <div>
+              <div class="guide-meta">
+                <span class="locale-code">繁中</span>
+                <span class="guide-state" data-i18n="guideAvailable">Available</span>
+              </div>
+              <h3 data-i18n="guideHantTitle">Traditional Chinese Usage Guide</h3>
+              <p data-i18n="guideHantCopy">Six-page PDF for current release use, included in the marketing URL assets folder.</p>
+            </div>
+            <a class="button secondary" href="assets/guides/FitRoster_User_Guide_zh-Hant.pdf" download>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="guideDownload">Download PDF</span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="release" class="release" aria-labelledby="release-title">
+      <div class="shell">
+        <div class="cta-panel">
+          <div>
+            <p class="section-kicker" data-i18n="releaseKicker">Release marketing URL</p>
+            <h2 id="release-title" data-i18n="releaseTitle">Built for the public product page.</h2>
+            <p data-i18n="releaseCopy">This page is written for release positioning: premium brand presentation, complete device screenshots, multilingual content, usage guide access, and clear no-subscription messaging.</p>
+          </div>
+          <a class="button dark" href="mailto:fox3nova@gmail.com?subject=FitRoster%20Release%20Information" data-mailto="release">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7.5 12 13l8-5.5M5 6h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span data-i18n="releaseCta">Contact FitRoster</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <span data-i18n="footerCopy">FitRoster release marketing page. Built for App Store product positioning.</span>
+      <a href="mailto:fox3nova@gmail.com" data-i18n="footerContact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        metaTitle: "FitRoster | Professional Training Log for Coaches and Trainees",
+        metaDescription: "FitRoster is a professional iOS training log and coach-trainee workout planning app with no subscription required.",
+        navAria: "Primary navigation",
+        brandAria: "FitRoster home",
+        sectionNavAria: "Page sections",
+        languageLabel: "Language",
+        navScreens: "Screens",
+        navFeatures: "Features",
+        navGuide: "Guide",
+        navRelease: "Release",
+        navCta: "Release info",
+        heroEyebrow: "Official iOS training release",
+        heroTitle: "FitRoster",
+        heroStatement: "Professional coaching, trainee schedules, and training records. No subscription required.",
+        heroCopy: "Plan workouts, record sessions, review progress, and coordinate coach-trainee work from one polished iOS workspace.",
+        heroPrimary: "View full screenshots",
+        heroSecondary: "Read usage guide",
+        valueAria: "Product highlights",
+        valueNoSubTitle: "No Subscription",
+        valueNoSubCopy: "Core workflow without recurring subscription pressure",
+        valueRolesTitle: "Coach + Trainee",
+        valueRolesCopy: "Role-aware planning, review, and delivery flows",
+        valueDevicesTitle: "iPhone + iPad",
+        valueDevicesCopy: "Complete iPhone and landscape iPad screenshots captured from Simulator",
+        screenIpadTraining: "iPad Training",
+        positioningKicker: "Built for serious training work",
+        positioningTitle: "A release-ready training system for planning, logging, reviewing, and coaching.",
+        positioningCopy: "FitRoster is designed for trainers, athletes, and self-managed trainees who need structure without turning training data into a spreadsheet project.",
+        trustPlansTitle: "Structured workout plans",
+        trustPlansCopy: "Create reusable programs and keep planned work separate from completed records.",
+        trustCoachTitle: "Coach and trainee support",
+        trustCoachCopy: "Send plans, review trainee progress, and keep collaboration inside the training context.",
+        trustAnalysisTitle: "Useful analysis",
+        trustAnalysisCopy: "Review volume, records, muscle distribution, goals, and body-composition context.",
+        trustNoSubTitle: "No subscription required",
+        trustNoSubCopy: "A clear release message for users who want durable tools, not another recurring plan.",
+        screensKicker: "Complete simulator screenshots",
+        screensTitle: "iPhone and iPad screens are shown as complete captures.",
+        screensCopy: "No mockups, no cropped screen contents. These images preserve the full captured app screen, including status areas and bottom navigation.",
+        captureBadge: "Captured from Simulator",
+        iphoneScreensTitle: "iPhone",
+        ipadScreensTitle: "iPad",
+        iphoneScreensAria: "Full iPhone screenshots",
+        ipadScreensAria: "Full iPad screenshots",
+        screenTraining: "Training",
+        screenRecords: "Records",
+        screenAnalysis: "Analysis",
+        altIphoneTraining: "Full iPhone FitRoster training screen captured from Simulator",
+        altIphoneRecords: "Full iPhone FitRoster records screen captured from Simulator",
+        altIphoneAnalysis: "Full iPhone FitRoster analysis screen captured from Simulator",
+        altIpadTraining: "Full landscape iPad FitRoster training screen captured from Simulator",
+        altIpadRecords: "Full landscape iPad FitRoster records screen captured from Simulator",
+        altIpadAnalysis: "Full landscape iPad FitRoster analysis screen captured from Simulator",
+        featuresKicker: "Core capabilities",
+        featuresTitle: "Everything important for coaching, self-training, and progress review.",
+        featuresCopy: "The release page highlights what makes FitRoster practical: structured plans, clear records, coach-trainee delivery, analysis, backup, and no subscription requirement.",
+        featurePlanTitle: "Reusable workout plans",
+        featurePlanCopy: "Build training plans, duplicate templates, edit movements, and keep recurring programs organized.",
+        featureCoachTitle: "Coach and trainee schedules",
+        featureCoachCopy: "Support coach-assigned plans, trainee views, and role-specific surfaces without mixing workflows.",
+        featureRecordsTitle: "Training calendar records",
+        featureRecordsCopy: "Review completed sessions by day, week, or month and keep training history easy to inspect.",
+        featureAnalysisTitle: "Analysis and goals",
+        featureAnalysisCopy: "Track interval KPIs, body data, goals, muscle distribution, and progress signals from one analysis surface.",
+        featureNoSubTitle: "No subscription required",
+        featureNoSubCopy: "Present FitRoster as a focused professional tool without recurring subscription friction.",
+        featureSyncTitle: "iCloud sync and backup",
+        featureSyncCopy: "Support coach-trainee sync, file backup, and release-grade data portability workflows.",
+        workflowKicker: "Training workflow",
+        workflowTitle: "Built around the real training loop.",
+        workflowCopy: "FitRoster keeps the release story simple: plan the work, complete the session, review the results, then share what matters.",
+        workflowPlanTitle: "Plan",
+        workflowPlanCopy: "Create templates and structured routines for repeatable training blocks.",
+        workflowTrainTitle: "Train",
+        workflowTrainCopy: "Record sets, load, reps, bodyweight context, and completed sessions clearly.",
+        workflowReviewTitle: "Review",
+        workflowReviewCopy: "Use records, charts, and analysis views to decide the next training step.",
+        workflowCoachTitle: "Coach",
+        workflowCoachCopy: "Keep coach and trainee communication tied to the plan, not scattered messages.",
+        guideKicker: "Usage guide",
+        guideTitle: "Release users should have clear documentation from day one.",
+        guideCopy: "The guide library is ready for multiple languages. Traditional Chinese is available now, with English and Simplified Chinese slots reserved for future PDFs.",
+        guidePrimaryDownload: "Download current PDF",
+        guideGridAria: "Available usage guides",
+        guideAvailable: "Available",
+        guidePlanned: "Reserved",
+        guideComingSoon: "Coming soon",
+        guideDownload: "Download PDF",
+        guideEnglishTitle: "English Usage Guide",
+        guideEnglishCopy: "Reserved for the English PDF version when release documentation is localized.",
+        guideHansTitle: "Simplified Chinese Usage Guide",
+        guideHansCopy: "Reserved for the Simplified Chinese PDF version, keeping the file structure ready for localization.",
+        guideHantTitle: "Traditional Chinese Usage Guide",
+        guideHantCopy: "Six-page PDF for current release use, included in the marketing URL assets folder.",
+        releaseKicker: "Release marketing URL",
+        releaseTitle: "Built for the public product page.",
+        releaseCopy: "This page is written for release positioning: premium brand presentation, complete device screenshots, multilingual content, usage guide access, and clear no-subscription messaging.",
+        releaseCta: "Contact FitRoster",
+        footerCopy: "FitRoster release marketing page. Built for App Store product positioning.",
+        footerContact: "Contact",
+        mailSubject: "FitRoster Release Information",
+        mailBody: "Hi, I would like to learn more about FitRoster release information."
+      },
+      "zh-Hans": {
+        metaTitle: "FitRoster | 专业教练与学员训练记录",
+        metaDescription: "FitRoster 是一款专业 iOS 训练记录与教练学员课表协作 app，无需订阅即可使用核心训练流程。",
+        navAria: "主导航",
+        brandAria: "FitRoster 首页",
+        sectionNavAria: "页面区块",
+        languageLabel: "语言",
+        navScreens: "截图",
+        navFeatures: "功能",
+        navGuide: "说明",
+        navRelease: "发布",
+        navCta: "发布资讯",
+        heroEyebrow: "正式 iOS 训练发布页",
+        heroTitle: "FitRoster",
+        heroStatement: "专业教练、学员课表与训练记录。无需订阅。",
+        heroCopy: "FitRoster 将课表规划、训练记录、进度复盘，以及教练学员协作整合到一个精致的 iOS 工作区。",
+        heroPrimary: "查看完整截图",
+        heroSecondary: "阅读使用说明",
+        valueAria: "产品重点",
+        valueNoSubTitle: "无需订阅",
+        valueNoSubCopy: "核心训练流程不需要反复订阅压力",
+        valueRolesTitle: "教练 + 学员",
+        valueRolesCopy: "支援角色化规划、检查与课表发送",
+        valueDevicesTitle: "iPhone + iPad",
+        valueDevicesCopy: "完整 iPhone 与横向 iPad 截图来自真实模拟器",
+        screenIpadTraining: "iPad 训练",
+        positioningKicker: "为严肃训练工作而设计",
+        positioningTitle: "适合发布的训练系统，覆盖规划、记录、复盘与教练协作。",
+        positioningCopy: "FitRoster 为教练、运动员与自主管理训练者设计，提供结构化流程，不需要把训练资料整理成复杂表格。",
+        trustPlansTitle: "结构化训练课表",
+        trustPlansCopy: "建立可复用训练计划，并把规划内容与完成纪录清楚分开。",
+        trustCoachTitle: "支援教练与学员",
+        trustCoachCopy: "发送课表、检查学员进度，并让协作维持在训练脉络里。",
+        trustAnalysisTitle: "实用分析",
+        trustAnalysisCopy: "查看训练量、纪录、肌群分布、目标与身体组成背景。",
+        trustNoSubTitle: "无需订阅",
+        trustNoSubCopy: "清楚传达：这是耐用的专业工具，不是另一个订阅方案。",
+        screensKicker: "完整模拟器截图",
+        screensTitle: "iPhone 与 iPad 画面都以完整截图呈现。",
+        screensCopy: "不用 mockup、不裁切画面内容。图片保留完整 app 截图，包含状态区域与底部导航。",
+        captureBadge: "来自模拟器截图",
+        iphoneScreensTitle: "iPhone",
+        ipadScreensTitle: "iPad",
+        iphoneScreensAria: "完整 iPhone 截图",
+        ipadScreensAria: "完整 iPad 截图",
+        screenTraining: "训练",
+        screenRecords: "纪录",
+        screenAnalysis: "分析",
+        altIphoneTraining: "从模拟器截取的完整 iPhone FitRoster 训练画面",
+        altIphoneRecords: "从模拟器截取的完整 iPhone FitRoster 纪录画面",
+        altIphoneAnalysis: "从模拟器截取的完整 iPhone FitRoster 分析画面",
+        altIpadTraining: "从模拟器截取的完整横向 iPad FitRoster 训练画面",
+        altIpadRecords: "从模拟器截取的完整横向 iPad FitRoster 纪录画面",
+        altIpadAnalysis: "从模拟器截取的完整横向 iPad FitRoster 分析画面",
+        featuresKicker: "核心能力",
+        featuresTitle: "覆盖教练、自主训练与进度复盘的重要功能。",
+        featuresCopy: "发布页重点强调 FitRoster 的实用性：结构化课表、清晰纪录、教练学员课表发送、分析、备份，以及无需订阅。",
+        featurePlanTitle: "可复用训练课表",
+        featurePlanCopy: "建立训练计划、复制模板、编辑动作，并管理重复训练周期。",
+        featureCoachTitle: "教练与学员课表",
+        featureCoachCopy: "支援教练指定课表、学员视角和角色化界面，不混杂工作流程。",
+        featureRecordsTitle: "训练日历纪录",
+        featureRecordsCopy: "按日、周、月查看完成训练，让历史纪录容易检查。",
+        featureAnalysisTitle: "分析与目标",
+        featureAnalysisCopy: "在同一分析界面追踪区间 KPI、身体数据、目标、肌群分布与进度讯号。",
+        featureNoSubTitle: "无需订阅",
+        featureNoSubCopy: "把 FitRoster 呈现为没有订阅摩擦的专业训练工具。",
+        featureSyncTitle: "iCloud 同步与备份",
+        featureSyncCopy: "支援教练学员同步、文件备份与发布等级资料可携流程。",
+        workflowKicker: "训练流程",
+        workflowTitle: "围绕真实训练循环而设计。",
+        workflowCopy: "FitRoster 的发布叙事很直接：规划训练、完成训练、复盘结果，然后分享重点。",
+        workflowPlanTitle: "规划",
+        workflowPlanCopy: "建立模板和结构化课表，用于重复训练周期。",
+        workflowTrainTitle: "训练",
+        workflowTrainCopy: "清楚记录组数、重量、次数、自身体重背景与完成训练。",
+        workflowReviewTitle: "复盘",
+        workflowReviewCopy: "使用纪录、图表与分析视图决定下一步训练。",
+        workflowCoachTitle: "教练",
+        workflowCoachCopy: "让教练学员沟通围绕课表，而不是散落在聊天讯息中。",
+        guideKicker: "使用说明",
+        guideTitle: "正式发布第一天就应该有清楚文件。",
+        guideCopy: "说明文件库已准备好多语言结构。目前繁中 PDF 可下载，英文与简中 PDF 位置已预留。",
+        guidePrimaryDownload: "下载当前 PDF",
+        guideGridAria: "可用使用说明",
+        guideAvailable: "可下载",
+        guidePlanned: "已预留",
+        guideComingSoon: "即将提供",
+        guideDownload: "下载 PDF",
+        guideEnglishTitle: "英文使用说明",
+        guideEnglishCopy: "预留给发布说明本地化后的英文 PDF。",
+        guideHansTitle: "简体中文使用说明",
+        guideHansCopy: "预留给简中 PDF，并保持文件结构可直接扩充。",
+        guideHantTitle: "繁体中文使用说明",
+        guideHantCopy: "目前可用的六页 PDF，已包含在行销 URL assets 文件夹。",
+        releaseKicker: "发布行销 URL",
+        releaseTitle: "为公开产品页面而设计。",
+        releaseCopy: "这个页面用于正式发布定位：高质感品牌呈现、完整装置截图、多语言内容、使用说明入口，以及清楚的无需订阅讯息。",
+        releaseCta: "联系 FitRoster",
+        footerCopy: "FitRoster 正式发布行销页。用于 App Store 产品定位。",
+        footerContact: "联系",
+        mailSubject: "FitRoster 发布资讯",
+        mailBody: "你好，我想了解 FitRoster 发布资讯。"
+      },
+      "zh-Hant": {
+        metaTitle: "FitRoster | 專業教練與學員訓練紀錄",
+        metaDescription: "FitRoster 是一款專業 iOS 訓練紀錄與教練學員課表協作 app，無需訂閱即可使用核心訓練流程。",
+        navAria: "主導覽",
+        brandAria: "FitRoster 首頁",
+        sectionNavAria: "頁面區塊",
+        languageLabel: "語言",
+        navScreens: "截圖",
+        navFeatures: "功能",
+        navGuide: "說明",
+        navRelease: "發布",
+        navCta: "發布資訊",
+        heroEyebrow: "正式 iOS 訓練發布頁",
+        heroTitle: "FitRoster",
+        heroStatement: "專業教練、學員課表與訓練紀錄。無需訂閱。",
+        heroCopy: "FitRoster 將課表規劃、訓練紀錄、進度複盤，以及教練學員協作整合到一個精緻的 iOS 工作區。",
+        heroPrimary: "查看完整截圖",
+        heroSecondary: "閱讀使用說明",
+        valueAria: "產品重點",
+        valueNoSubTitle: "無需訂閱",
+        valueNoSubCopy: "核心訓練流程不需要反覆訂閱壓力",
+        valueRolesTitle: "教練 + 學員",
+        valueRolesCopy: "支援角色化規劃、檢查與課表發送",
+        valueDevicesTitle: "iPhone + iPad",
+        valueDevicesCopy: "完整 iPhone 與橫向 iPad 截圖來自真實模擬器",
+        screenIpadTraining: "iPad 訓練",
+        positioningKicker: "為嚴肅訓練工作而設計",
+        positioningTitle: "適合發布的訓練系統，覆蓋規劃、記錄、複盤與教練協作。",
+        positioningCopy: "FitRoster 為教練、運動員與自主管理訓練者設計，提供結構化流程，不需要把訓練資料整理成複雜表格。",
+        trustPlansTitle: "結構化訓練課表",
+        trustPlansCopy: "建立可複用訓練計畫，並把規劃內容與完成紀錄清楚分開。",
+        trustCoachTitle: "支援教練與學員",
+        trustCoachCopy: "發送課表、檢查學員進度，並讓協作維持在訓練脈絡裡。",
+        trustAnalysisTitle: "實用分析",
+        trustAnalysisCopy: "查看訓練量、紀錄、肌群分布、目標與身體組成背景。",
+        trustNoSubTitle: "無需訂閱",
+        trustNoSubCopy: "清楚傳達：這是耐用的專業工具，不是另一個訂閱方案。",
+        screensKicker: "完整模擬器截圖",
+        screensTitle: "iPhone 與 iPad 畫面都以完整截圖呈現。",
+        screensCopy: "不用 mockup、不裁切畫面內容。圖片保留完整 app 截圖，包含狀態區域與底部導覽。",
+        captureBadge: "來自模擬器截圖",
+        iphoneScreensTitle: "iPhone",
+        ipadScreensTitle: "iPad",
+        iphoneScreensAria: "完整 iPhone 截圖",
+        ipadScreensAria: "完整 iPad 截圖",
+        screenTraining: "訓練",
+        screenRecords: "紀錄",
+        screenAnalysis: "分析",
+        altIphoneTraining: "從模擬器截取的完整 iPhone FitRoster 訓練畫面",
+        altIphoneRecords: "從模擬器截取的完整 iPhone FitRoster 紀錄畫面",
+        altIphoneAnalysis: "從模擬器截取的完整 iPhone FitRoster 分析畫面",
+        altIpadTraining: "從模擬器截取的完整橫向 iPad FitRoster 訓練畫面",
+        altIpadRecords: "從模擬器截取的完整橫向 iPad FitRoster 紀錄畫面",
+        altIpadAnalysis: "從模擬器截取的完整橫向 iPad FitRoster 分析畫面",
+        featuresKicker: "核心能力",
+        featuresTitle: "覆蓋教練、自主訓練與進度複盤的重要功能。",
+        featuresCopy: "發布頁重點強調 FitRoster 的實用性：結構化課表、清晰紀錄、教練學員課表發送、分析、備份，以及無需訂閱。",
+        featurePlanTitle: "可複用訓練課表",
+        featurePlanCopy: "建立訓練計畫、複製模板、編輯動作，並管理重複訓練週期。",
+        featureCoachTitle: "教練與學員課表",
+        featureCoachCopy: "支援教練指定課表、學員視角和角色化介面，不混雜工作流程。",
+        featureRecordsTitle: "訓練日曆紀錄",
+        featureRecordsCopy: "按日、週、月查看完成訓練，讓歷史紀錄容易檢查。",
+        featureAnalysisTitle: "分析與目標",
+        featureAnalysisCopy: "在同一分析介面追蹤區間 KPI、身體數據、目標、肌群分布與進度訊號。",
+        featureNoSubTitle: "無需訂閱",
+        featureNoSubCopy: "把 FitRoster 呈現為沒有訂閱摩擦的專業訓練工具。",
+        featureSyncTitle: "iCloud 同步與備份",
+        featureSyncCopy: "支援教練學員同步、檔案備份與發布等級資料可攜流程。",
+        workflowKicker: "訓練流程",
+        workflowTitle: "圍繞真實訓練循環而設計。",
+        workflowCopy: "FitRoster 的發布敘事很直接：規劃訓練、完成訓練、複盤結果，然後分享重點。",
+        workflowPlanTitle: "規劃",
+        workflowPlanCopy: "建立模板和結構化課表，用於重複訓練週期。",
+        workflowTrainTitle: "訓練",
+        workflowTrainCopy: "清楚記錄組數、重量、次數、自體重背景與完成訓練。",
+        workflowReviewTitle: "複盤",
+        workflowReviewCopy: "使用紀錄、圖表與分析視圖決定下一步訓練。",
+        workflowCoachTitle: "教練",
+        workflowCoachCopy: "讓教練學員溝通圍繞課表，而不是散落在聊天訊息中。",
+        guideKicker: "使用說明",
+        guideTitle: "正式發布第一天就應該有清楚文件。",
+        guideCopy: "說明文件庫已準備好多語結構。目前繁中 PDF 可下載，英文與簡中 PDF 位置已預留。",
+        guidePrimaryDownload: "下載目前 PDF",
+        guideGridAria: "可用使用說明",
+        guideAvailable: "可下載",
+        guidePlanned: "已預留",
+        guideComingSoon: "即將提供",
+        guideDownload: "下載 PDF",
+        guideEnglishTitle: "英文使用說明",
+        guideEnglishCopy: "預留給發布說明在地化後的英文 PDF。",
+        guideHansTitle: "簡體中文使用說明",
+        guideHansCopy: "預留給簡中 PDF，並保持檔案結構可直接擴充。",
+        guideHantTitle: "繁體中文使用說明",
+        guideHantCopy: "目前可用的六頁 PDF，已包含在行銷 URL assets 資料夾。",
+        releaseKicker: "發布行銷 URL",
+        releaseTitle: "為公開產品頁面而設計。",
+        releaseCopy: "這個頁面用於正式發布定位：高質感品牌呈現、完整裝置截圖、多語內容、使用說明入口，以及清楚的無需訂閱訊息。",
+        releaseCta: "聯絡 FitRoster",
+        footerCopy: "FitRoster 正式發布行銷頁。用於 App Store 產品定位。",
+        footerContact: "聯絡",
+        mailSubject: "FitRoster 發布資訊",
+        mailBody: "你好，我想了解 FitRoster 發布資訊。"
+      }
+    };
+
+    const supportedLanguages = Object.keys(translations);
+    const metaDescription = document.querySelector('meta[name="description"]');
+
+    function preferredLanguage() {
+      const stored = localStorage.getItem("fitroster.marketing.language");
+      if (supportedLanguages.includes(stored)) {
+        return stored;
+      }
+      const browserLanguage = navigator.language || "";
+      if (browserLanguage.startsWith("zh-Hans") || browserLanguage === "zh-CN" || browserLanguage === "zh-SG") {
+        return "zh-Hans";
+      }
+      if (browserLanguage.startsWith("zh")) {
+        return "zh-Hant";
+      }
+      return "en";
+    }
+
+    function valueFor(dictionary, key) {
+      return dictionary[key] || translations.en[key] || "";
+    }
+
+    function setLanguage(language) {
+      const activeLanguage = supportedLanguages.includes(language) ? language : "en";
+      const dictionary = translations[activeLanguage];
+
+      document.documentElement.lang = activeLanguage;
+      document.documentElement.dataset.language = activeLanguage;
+      document.title = valueFor(dictionary, "metaTitle");
+      metaDescription.setAttribute("content", valueFor(dictionary, "metaDescription"));
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = valueFor(dictionary, element.dataset.i18n);
+      });
+
+      document.querySelectorAll("[data-i18n-attr]").forEach((element) => {
+        element.dataset.i18nAttr.split(";").forEach((pair) => {
+          const [attribute, key] = pair.split(":");
+          if (attribute && key) {
+            element.setAttribute(attribute, valueFor(dictionary, key));
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-language-option]").forEach((button) => {
+        const isActive = button.dataset.languageOption === activeLanguage;
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+
+      document.querySelectorAll("[data-mailto='release']").forEach((link) => {
+        const subject = encodeURIComponent(valueFor(dictionary, "mailSubject"));
+        const body = encodeURIComponent(valueFor(dictionary, "mailBody"));
+        link.href = `mailto:fox3nova@gmail.com?subject=${subject}&body=${body}`;
+      });
+
+      localStorage.setItem("fitroster.marketing.language", activeLanguage);
+    }
+
+    document.querySelectorAll("[data-language-option]").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.languageOption));
+    });
+
+    setLanguage(preferredLanguage());
+  </script>
+</body>
+</html>
