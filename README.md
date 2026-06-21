@@ -5,12 +5,14 @@ This folder contains a static release marketing page for FitRoster.
 Current structure:
 
 - `index.html` is a single static page with built-in copy for English, Simplified Chinese, Traditional Chinese, Japanese, Korean, Thai, Malay, Russian, German, French, and Spanish.
+- `guide.html` is the multilingual HTML usage guide subpage. It covers setup, editable exercise names, custom exercises, coach-trainee workflows, records, analysis, backup, and settings with language- and device-specific screenshot paths.
 - `support.html` is the public App Store support page with contact, FAQ, usage-guide, product, and privacy links in the same language set.
 - `privacy.html` is the public App Store privacy policy page with the same multilingual language structure.
 - `assets/site-i18n.js` provides shared language metadata, browser-language detection, manual language switching, and the added multilingual copy used by all three pages.
 - `assets/iphone-*.jpg` and `assets/ipad-*.jpg` are complete screenshots captured from the running FitRoster iOS Simulator build. The iPad screenshots are landscape captures for release-page presentation.
 - `assets/start-silver-fitroster.png` is the release logo asset copied from `Import Data/FitRoster Logo/start_silver_fitroster.PNG`.
-- `assets/guides/` stores usage-guide PDFs. The Traditional Chinese guide is available now, with English and Simplified Chinese slots reserved in the page UI.
+- `assets/guide-screenshots/<locale>/` stores localized screenshots used by the HTML usage guide.
+- `assets/guides/` stores legacy usage-guide PDFs. The Traditional Chinese PDF remains available as an archive while the release guide moves to HTML.
 
 Open locally:
 
@@ -31,8 +33,13 @@ Language behavior:
 - The pages detect `navigator.languages` and map supported locales to the closest available FitRoster language.
 - Manual language selection is available from the top navigation and is saved in `localStorage` under `fitroster.marketing.language`.
 
-Adding future usage-guide languages:
+Usage-guide screenshots:
+
+- Run `Scripts/capture_release_screenshots.py` with the built simulator app to write App Store screenshots, manual screenshots, and the website guide screenshot copy.
+- Website guide screenshots are copied to `assets/guide-screenshots/<locale>/<device>/`.
+- The HTML guide uses the selected site language and each image's device target to load matching iPhone and iPad screenshot folders.
+
+Adding future usage-guide PDF archives:
 
 - Put the localized PDF in `assets/guides/`.
-- Update the matching guide card in `index.html` from reserved to available.
 - Keep the locale naming explicit, for example `FitRoster_User_Guide_en.pdf` or `FitRoster_User_Guide_zh-Hans.pdf`.

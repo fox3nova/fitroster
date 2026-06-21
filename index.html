@@ -1031,7 +1031,7 @@
     <nav class="nav-links" aria-label="Page sections" data-i18n-attr="aria-label:sectionNavAria">
       <a href="#screens" data-i18n="navScreens">Screens</a>
       <a href="#features" data-i18n="navFeatures">Features</a>
-      <a href="#guide" data-i18n="navGuide">Guide</a>
+      <a href="guide.html" data-i18n="navGuide">Guide</a>
       <a href="#release" data-i18n="navRelease">Release</a>
     </nav>
     <div class="nav-actions">
@@ -1064,7 +1064,7 @@
               </svg>
               <span data-i18n="heroPrimary">View full screenshots</span>
             </a>
-            <a class="button secondary" href="#guide">
+            <a class="button secondary" href="guide.html">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6 4h9l3 3v13H6zM14 4v4h4M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -1303,48 +1303,58 @@
         <div class="guide-panel">
           <p class="section-kicker" data-i18n="guideKicker">Usage guide</p>
           <h2 id="guide-title" class="section-heading" data-i18n="guideTitle">Release users should have clear documentation from day one.</h2>
-          <p class="section-copy" data-i18n="guideCopy">The guide library is ready for multiple languages. Traditional Chinese is available now, with English and Simplified Chinese slots reserved for future PDFs.</p>
-          <a class="button dark" href="assets/guides/FitRoster_User_Guide_zh-Hant.pdf" download>
+          <p class="section-copy" data-i18n="guideCopy">The release guide is now an HTML subpage with multilingual copy and localized screenshot paths for App Store and documentation work.</p>
+          <a class="button dark" href="guide.html">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span data-i18n="guidePrimaryDownload">Download current PDF</span>
+            <span data-i18n="guidePrimaryDownload">Open HTML guide</span>
           </a>
         </div>
 
         <div class="guide-grid" aria-label="Available usage guides" data-i18n-attr="aria-label:guideGridAria">
-          <article class="guide-card" data-guide-state="planned">
+          <article class="guide-card" data-guide-state="available">
             <div>
               <div class="guide-meta">
-                <span class="locale-code">EN</span>
-                <span class="guide-state" data-i18n="guidePlanned">Reserved</span>
+                <span class="locale-code">11</span>
+                <span class="guide-state" data-i18n="guideAvailable">Available</span>
               </div>
-              <h3 data-i18n="guideEnglishTitle">English Usage Guide</h3>
-              <p data-i18n="guideEnglishCopy">Reserved for the English PDF version when release documentation is localized.</p>
+              <h3 data-i18n="guideEnglishTitle">Multilingual HTML Guide</h3>
+              <p data-i18n="guideEnglishCopy">Covers setup, editable exercise names, custom exercises, coach-trainee workflows, records, analysis, backup, and settings.</p>
             </div>
-            <span class="button disabled" aria-disabled="true" data-i18n="guideComingSoon">Coming soon</span>
-          </article>
-
-          <article class="guide-card" data-guide-state="planned">
-            <div>
-              <div class="guide-meta">
-                <span class="locale-code">简中</span>
-                <span class="guide-state" data-i18n="guidePlanned">Reserved</span>
-              </div>
-              <h3 data-i18n="guideHansTitle">Simplified Chinese Usage Guide</h3>
-              <p data-i18n="guideHansCopy">Reserved for the Simplified Chinese PDF version, keeping the file structure ready for localization.</p>
-            </div>
-            <span class="button disabled" aria-disabled="true" data-i18n="guideComingSoon">Coming soon</span>
+            <a class="button secondary" href="guide.html">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="guideDownload">Open guide</span>
+            </a>
           </article>
 
           <article class="guide-card" data-guide-state="available">
             <div>
               <div class="guide-meta">
-                <span class="locale-code">繁中</span>
+                <span class="locale-code">IMG</span>
                 <span class="guide-state" data-i18n="guideAvailable">Available</span>
               </div>
-              <h3 data-i18n="guideHantTitle">Traditional Chinese Usage Guide</h3>
-              <p data-i18n="guideHantCopy">Six-page PDF for current release use, included in the marketing URL assets folder.</p>
+              <h3 data-i18n="guideHansTitle">Localized Screenshot Set</h3>
+              <p data-i18n="guideHansCopy">The capture pipeline outputs App Store screenshots and manual screenshots per release locale.</p>
+            </div>
+            <a class="button secondary" href="guide.html#plans">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="guideDownload">Open guide</span>
+            </a>
+          </article>
+
+          <article class="guide-card" data-guide-state="available">
+            <div>
+              <div class="guide-meta">
+                <span class="locale-code">PDF</span>
+                <span class="guide-state" data-i18n="guideAvailable">Available</span>
+              </div>
+              <h3 data-i18n="guideHantTitle">Legacy PDF Archive</h3>
+              <p data-i18n="guideHantCopy">The existing Traditional Chinese PDF remains available as an archive while the release guide moves to HTML.</p>
             </div>
             <a class="button secondary" href="assets/guides/FitRoster_User_Guide_zh-Hant.pdf" download>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1472,19 +1482,19 @@
         workflowCoachCopy: "Keep coach and trainee communication tied to the plan, not scattered messages.",
         guideKicker: "Usage guide",
         guideTitle: "Release users should have clear documentation from day one.",
-        guideCopy: "The guide library is ready for multiple languages. Traditional Chinese is available now, with English and Simplified Chinese slots reserved for future PDFs.",
-        guidePrimaryDownload: "Download current PDF",
+        guideCopy: "The release guide is now an HTML subpage with multilingual copy and localized screenshot paths for App Store and documentation work.",
+        guidePrimaryDownload: "Open HTML guide",
         guideGridAria: "Available usage guides",
         guideAvailable: "Available",
         guidePlanned: "Reserved",
         guideComingSoon: "Coming soon",
-        guideDownload: "Download PDF",
-        guideEnglishTitle: "English Usage Guide",
-        guideEnglishCopy: "Reserved for the English PDF version when release documentation is localized.",
-        guideHansTitle: "Simplified Chinese Usage Guide",
-        guideHansCopy: "Reserved for the Simplified Chinese PDF version, keeping the file structure ready for localization.",
-        guideHantTitle: "Traditional Chinese Usage Guide",
-        guideHantCopy: "Six-page PDF for current release use, included in the marketing URL assets folder.",
+        guideDownload: "Open guide",
+        guideEnglishTitle: "Multilingual HTML Guide",
+        guideEnglishCopy: "Covers setup, editable exercise names, custom exercises, coach-trainee workflows, records, analysis, backup, and settings.",
+        guideHansTitle: "Localized Screenshot Set",
+        guideHansCopy: "The capture pipeline outputs App Store screenshots and manual screenshots per release locale.",
+        guideHantTitle: "Legacy PDF Archive",
+        guideHantCopy: "The existing Traditional Chinese PDF remains available as an archive while the release guide moves to HTML.",
         releaseKicker: "Release marketing URL",
         releaseTitle: "Built for the public product page.",
         releaseCopy: "This page is written for release positioning: premium brand presentation, complete device screenshots, multilingual content, usage guide access, and clear no-subscription messaging.",
@@ -1578,19 +1588,19 @@
         workflowCoachCopy: "让教练学员沟通围绕课表，而不是散落在聊天讯息中。",
         guideKicker: "使用说明",
         guideTitle: "正式发布第一天就应该有清楚文件。",
-        guideCopy: "说明文件库已准备好多语言结构。目前繁中 PDF 可下载，英文与简中 PDF 位置已预留。",
-        guidePrimaryDownload: "下载当前 PDF",
+        guideCopy: "发布使用说明已改成 HTML 子页面，包含多语言文案，并预留各语言 App Store 与说明用截图路径。",
+        guidePrimaryDownload: "打开 HTML 使用说明",
         guideGridAria: "可用使用说明",
         guideAvailable: "可下载",
         guidePlanned: "已预留",
         guideComingSoon: "即将提供",
-        guideDownload: "下载 PDF",
-        guideEnglishTitle: "英文使用说明",
-        guideEnglishCopy: "预留给发布说明本地化后的英文 PDF。",
-        guideHansTitle: "简体中文使用说明",
-        guideHansCopy: "预留给简中 PDF，并保持文件结构可直接扩充。",
-        guideHantTitle: "繁体中文使用说明",
-        guideHantCopy: "目前可用的六页 PDF，已包含在行销 URL assets 文件夹。",
+        guideDownload: "打开说明",
+        guideEnglishTitle: "多语言 HTML 使用说明",
+        guideEnglishCopy: "涵盖设置、可修改动作名称、自定义动作、教练学员流程、记录、分析、备份与设置。",
+        guideHansTitle: "本地化截图组",
+        guideHansCopy: "截图流程会依发布语言输出 App Store 截图与使用说明截图。",
+        guideHantTitle: "旧版 PDF 归档",
+        guideHantCopy: "既有繁中 PDF 保留为归档，正式发布说明改由 HTML 页面承接。",
         releaseKicker: "发布行销 URL",
         releaseTitle: "为公开产品页面而设计。",
         releaseCopy: "这个页面用于正式发布定位：高质感品牌呈现、完整装置截图、多语言内容、使用说明入口，以及清楚的无需订阅讯息。",
@@ -1684,19 +1694,19 @@
         workflowCoachCopy: "讓教練學員溝通圍繞課表，而不是散落在聊天訊息中。",
         guideKicker: "使用說明",
         guideTitle: "正式發布第一天就應該有清楚文件。",
-        guideCopy: "說明文件庫已準備好多語結構。目前繁中 PDF 可下載，英文與簡中 PDF 位置已預留。",
-        guidePrimaryDownload: "下載目前 PDF",
+        guideCopy: "發布使用說明已改成 HTML 子頁面，包含多語文案，並預留各語言 App Store 與說明用截圖路徑。",
+        guidePrimaryDownload: "開啟 HTML 使用說明",
         guideGridAria: "可用使用說明",
         guideAvailable: "可下載",
         guidePlanned: "已預留",
         guideComingSoon: "即將提供",
-        guideDownload: "下載 PDF",
-        guideEnglishTitle: "英文使用說明",
-        guideEnglishCopy: "預留給發布說明在地化後的英文 PDF。",
-        guideHansTitle: "簡體中文使用說明",
-        guideHansCopy: "預留給簡中 PDF，並保持檔案結構可直接擴充。",
-        guideHantTitle: "繁體中文使用說明",
-        guideHantCopy: "目前可用的六頁 PDF，已包含在行銷 URL assets 資料夾。",
+        guideDownload: "開啟說明",
+        guideEnglishTitle: "多語 HTML 使用說明",
+        guideEnglishCopy: "涵蓋設定、可修改動作名稱、自訂動作、教練學員流程、紀錄、分析、備份與設定。",
+        guideHansTitle: "在地化截圖組",
+        guideHansCopy: "截圖流程會依發布語言輸出 App Store 截圖與使用說明截圖。",
+        guideHantTitle: "舊版 PDF 歸檔",
+        guideHantCopy: "既有繁中 PDF 保留為歸檔，正式發布說明改由 HTML 頁面承接。",
         releaseKicker: "發布行銷 URL",
         releaseTitle: "為公開產品頁面而設計。",
         releaseCopy: "這個頁面用於正式發布定位：高質感品牌呈現、完整裝置截圖、多語內容、使用說明入口，以及清楚的無需訂閱訊息。",

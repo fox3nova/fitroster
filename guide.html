@@ -1,0 +1,2037 @@
+<!doctype html>
+<html lang="en" data-language="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitRoster usage guide for workout plans, coach-trainee collaboration, records, analysis, backup, and settings.">
+  <meta name="theme-color" content="#101010">
+  <link rel="icon" href="assets/start-silver-fitroster.png" type="image/png">
+  <title>FitRoster Usage Guide</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --black: #0b0b0d;
+      --black-soft: #151518;
+      --ink: #141414;
+      --muted: #66707b;
+      --steel: #7d858f;
+      --silver: #d8dde3;
+      --line: #dce1e7;
+      --paper: #f5f5f2;
+      --white: #ffffff;
+      --gold: #c59b4b;
+      --gold-deep: #9f742b;
+      --blue: #2b65f6;
+      --green: #19a974;
+      --shadow: 0 26px 80px rgba(7, 8, 10, 0.18);
+      --tight: "Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif;
+      --body: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+      font-family: var(--body);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(11, 11, 13, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(11, 11, 13, 0.045) 1px, transparent 1px),
+        var(--paper);
+      background-size: 56px 56px, 56px 56px, auto;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a,
+    select {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 50;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      color: #fff;
+      background: rgba(11, 11, 13, 0.84);
+      box-shadow: 0 22px 62px rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(22px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      outline-offset: 5px;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-name {
+      font-family: var(--tight);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-links a {
+      outline-offset: 7px;
+      transition: color 180ms ease-out;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #fff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      min-width: 156px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .language-switch select {
+      width: 100%;
+      min-height: 32px;
+      padding: 0 34px 0 14px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: transparent;
+      font: 800 12px / 1 var(--body);
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      transition: color 180ms ease-out, background-color 180ms ease-out, box-shadow 180ms ease-out;
+    }
+
+    .language-switch select:hover,
+    .language-switch select:focus-visible {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .language-switch select option {
+      color: var(--black);
+      background: #fff;
+    }
+
+    .language-switch::after {
+      width: 8px;
+      height: 8px;
+      margin-left: -26px;
+      border-right: 2px solid rgba(255, 255, 255, 0.78);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.78);
+      content: "";
+      pointer-events: none;
+      transform: rotate(45deg) translateY(-2px);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 0 18px;
+      border: 1px solid rgba(11, 11, 13, 0.12);
+      border-radius: 999px;
+      color: var(--black);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 10px 30px rgba(7, 8, 10, 0.10);
+      cursor: pointer;
+      transition: background-color 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      border-color: rgba(11, 11, 13, 0.28);
+      background: var(--silver-strong, #f3f5f7);
+    }
+
+    .button.dark {
+      color: #fff;
+      background: var(--black);
+      border-color: var(--black);
+    }
+
+    .button.dark:hover,
+    .button.dark:focus-visible {
+      background: #29292d;
+    }
+
+    .button svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 760px;
+      padding: 142px 0 74px;
+      color: #fff;
+      background:
+        linear-gradient(130deg, rgba(197, 155, 75, 0.24), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+        var(--black);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 84px;
+      background: linear-gradient(180deg, transparent, var(--paper));
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 0 11px;
+      border: 1px solid rgba(197, 155, 75, 0.36);
+      border-radius: 999px;
+      color: #f4d68f;
+      background: rgba(197, 155, 75, 0.12);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin-top: 22px;
+      font-family: var(--tight);
+      font-size: clamp(62px, 9vw, 126px);
+      line-height: 0.88;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-top: 24px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 20px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .hero-panel {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .phone-shot,
+    .summary-panel,
+    .chapter-card,
+    .callout,
+    .step-card {
+      border: 1px solid rgba(11, 11, 13, 0.10);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .phone-shot {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .phone-shot figure {
+      margin: 0;
+      overflow: hidden;
+      border-radius: 15px;
+      background: #eef1f4;
+    }
+
+    .phone-shot img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #eef1f4;
+    }
+
+    .summary-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      color: var(--ink);
+    }
+
+    .summary-panel h2 {
+      font-family: var(--tight);
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .summary-panel p {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.58;
+      font-weight: 600;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .summary-list span {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .summary-list svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      color: var(--green);
+    }
+
+    .section {
+      padding: 82px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .section-title {
+      font-family: var(--tight);
+      font-size: clamp(44px, 6vw, 78px);
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.62;
+      font-weight: 600;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step-card {
+      min-height: 214px;
+      padding: 22px;
+      box-shadow: 0 16px 48px rgba(7, 8, 10, 0.10);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 20px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--black);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .step-card h3 {
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .step-card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .chapter {
+      padding: 0 0 42px;
+    }
+
+    .chapter-card {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 28px;
+      align-items: center;
+      padding: 24px;
+      box-shadow: 0 16px 48px rgba(7, 8, 10, 0.10);
+    }
+
+    .chapter-card.reverse {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    }
+
+    .chapter-text {
+      padding: 10px;
+    }
+
+    .chapter-label {
+      color: var(--gold-deep);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .chapter-text h2 {
+      margin-top: 10px;
+      font-family: var(--tight);
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .chapter-text p {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.62;
+      font-weight: 600;
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 22px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bullet-list li {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 10px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .bullet-list svg {
+      width: 22px;
+      height: 22px;
+      color: var(--green);
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .image-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #eef1f4;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #eef1f4;
+    }
+
+    .image-frame.wide {
+      grid-column: 1 / -1;
+    }
+
+    .image-frame.tablet {
+      grid-column: 1 / -1;
+    }
+
+    .image-frame.tablet img {
+      width: auto;
+      max-height: 620px;
+      margin: 0 auto;
+    }
+
+    .image-frame figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      color: var(--muted);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .callout-section {
+      padding: 76px 0 92px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%),
+        var(--black);
+    }
+
+    .callout-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .callout {
+      min-height: 230px;
+      padding: 24px;
+      border-color: rgba(255, 255, 255, 0.13);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: none;
+    }
+
+    .callout svg {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 22px;
+      color: var(--gold);
+    }
+
+    .callout h3 {
+      font-size: 22px;
+      line-height: 1.12;
+    }
+
+    .callout p {
+      margin-top: 10px;
+      color: rgba(255, 255, 255, 0.70);
+      font-size: 15px;
+      line-height: 1.58;
+      font-weight: 600;
+    }
+
+    .final-cta {
+      padding: 72px 0;
+      background: #fff;
+    }
+
+    .cta-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 26px;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(197, 155, 75, 0.12), transparent 38%),
+        #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-panel h2 {
+      font-family: var(--tight);
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .cta-panel p {
+      max-width: 720px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.62;
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 34px 0 46px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      background: #fff;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-row a {
+      color: var(--gold-deep);
+      outline-offset: 6px;
+    }
+
+    @media (max-width: 1080px) {
+      .topbar {
+        grid-template-columns: auto auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid,
+      .hero-panel,
+      .section-head,
+      .chapter-card,
+      .chapter-card.reverse,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-grid,
+      .callout-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .topbar {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        padding: 8px;
+      }
+
+      .brand img {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+      }
+
+      .brand-name {
+        display: none;
+      }
+
+      .language-switch {
+        min-width: 148px;
+      }
+
+      .hero {
+        padding: 112px 0 58px;
+      }
+
+      .hero-copy,
+      .section-copy,
+      .chapter-text p,
+      .cta-panel p {
+        font-size: 16px;
+      }
+
+      .summary-panel,
+      .chapter-card,
+      .cta-panel {
+        padding: 20px;
+      }
+
+      .section {
+        padding: 58px 0;
+      }
+
+      .quick-grid,
+      .callout-grid,
+      .image-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-frame.tablet img {
+        width: 100%;
+        max-height: none;
+      }
+
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" aria-label="Guide navigation" data-i18n-attr="aria-label:navAria">
+    <a class="brand" href="index.html" aria-label="FitRoster home" data-i18n-attr="aria-label:brandAria">
+      <img src="assets/start-silver-fitroster.png" alt="" aria-hidden="true">
+      <span class="brand-name">FitRoster</span>
+    </a>
+    <nav class="nav-links" aria-label="Guide sections" data-i18n-attr="aria-label:sectionNavAria">
+      <a href="#quick" data-i18n="navQuick">Start</a>
+      <a href="#plans" data-i18n="navPlans">Plans</a>
+      <a href="#coach" data-i18n="navCoach">Coach</a>
+      <a href="#analysis" data-i18n="navAnalysis">Analysis</a>
+    </nav>
+    <div class="nav-actions">
+      <label class="language-switch">
+        <span class="sr-only" data-i18n="languageLabel">Language</span>
+        <select data-language-select aria-label="Language" data-i18n-attr="aria-label:languageLabel"></select>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="guide-title">
+      <div class="shell hero-grid">
+        <div>
+          <p class="kicker" data-i18n="heroKicker">FitRoster guide</p>
+          <h1 id="guide-title" data-i18n="heroTitle">Usage Guide</h1>
+          <p class="hero-copy" data-i18n="heroCopy">Learn the daily FitRoster flow: set up your profile, build reusable training plans, rename or create exercises, work between coach and trainee, review records, and read analysis signals.</p>
+          <div class="hero-actions">
+            <a class="button dark" href="#quick">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="heroPrimary">Start guide</span>
+            </a>
+            <a class="button" href="index.html">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 6 9 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span data-i18n="heroSecondary">Product page</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="phone-shot">
+            <figure>
+              <img data-guide-img data-shot="coachTraining" src="assets/guide-screenshots/en/iPhone_6_5/01_coach_training_templates.jpg" alt="FitRoster coach training screenshot" data-i18n-attr="alt:altCoachTraining">
+            </figure>
+          </div>
+          <div class="summary-panel">
+            <div>
+              <h2 data-i18n="summaryTitle">What this guide covers</h2>
+              <p data-i18n="summaryCopy">The old in-app help was a quick checklist. This HTML guide adds image-led explanations and all release languages.</p>
+            </div>
+            <div class="summary-list" aria-label="Guide highlights" data-i18n-attr="aria-label:summaryAria">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="summaryPlans">Reusable plans, custom exercises, and editable exercise names.</span>
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="summaryCoach">Coach-to-trainee plan delivery, trainee acceptance, and session return.</span>
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="summaryAnalysis">Records, analysis, goals, InBody context, and muscle distribution.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quick" class="section" aria-labelledby="quick-title">
+      <div class="shell">
+        <div class="section-head">
+          <h2 id="quick-title" class="section-title" data-i18n="quickTitle">Fast start</h2>
+          <p class="section-copy" data-i18n="quickCopy">Set the basics first, then use FitRoster around the same loop every time: plan, train, review, and share when coaching is involved.</p>
+        </div>
+        <div class="quick-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <h3 data-i18n="quickProfileTitle">Profile and units</h3>
+            <p data-i18n="quickProfileCopy">Set nickname, bodyweight context, unit preference, language, and the role you want FitRoster to open into.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">02</span>
+            <h3 data-i18n="quickPlanTitle">Choose or build a plan</h3>
+            <p data-i18n="quickPlanCopy">Start from built-in templates, duplicate a menu, rename movements, or create your own exercises and routines.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <h3 data-i18n="quickTrainTitle">Log the session</h3>
+            <p data-i18n="quickTrainCopy">Record sets with load, reps, bodyweight context, and completion state. Leave unused planned items untrained.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">04</span>
+            <h3 data-i18n="quickReviewTitle">Review and adjust</h3>
+            <p data-i18n="quickReviewCopy">Use records, analysis, goals, and coach feedback to decide what should change next.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="plans" class="chapter" aria-labelledby="plans-title">
+      <div class="shell">
+        <article class="chapter-card">
+          <div class="chapter-text">
+            <p class="chapter-label" data-i18n="plansKicker">Plans and exercises</p>
+            <h2 id="plans-title" data-i18n="plansTitle">Build your training language.</h2>
+            <p data-i18n="plansCopy">FitRoster treats a workout menu as a reusable training structure. You can adjust exercise names freely, add your own exercises, and keep built-in names localized while custom names stay exactly as you typed them.</p>
+            <ul class="bullet-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="plansBulletRename">Rename exercise rows to match your gym, coaching vocabulary, or equipment labels.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="plansBulletCreate">Create custom exercises and organize them into reusable templates or free-training menus.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="plansBulletSeparate">Keep planned items separate from completed training records so history stays clean.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="image-grid">
+            <figure class="image-frame">
+              <img data-guide-img data-shot="coachTraining" src="assets/guide-screenshots/en/iPhone_6_5/01_coach_training_templates.jpg" alt="Coach training templates" data-i18n-attr="alt:altCoachTraining">
+              <figcaption><span data-i18n="figTraining">Training</span><span>01</span></figcaption>
+            </figure>
+            <figure class="image-frame">
+              <img data-guide-img data-shot="trainingMenu" src="assets/guide-screenshots/en/iPhone_6_5/06_trainee_training_coach_menu.jpg" alt="Training menu and coach plan" data-i18n-attr="alt:altTrainingMenu">
+              <figcaption><span data-i18n="figCatalog">Catalog</span><span>02</span></figcaption>
+            </figure>
+            <figure class="image-frame tablet">
+              <img data-guide-img data-device="iPad_13" data-shot="coachTraining" src="assets/guide-screenshots/en/iPad_13/01_coach_training_templates.jpg" alt="Coach training templates on iPad" data-i18n-attr="alt:altCoachTraining">
+              <figcaption><span data-i18n="figTraining">Training</span><span>iPad</span></figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="coach" class="chapter" aria-labelledby="coach-title">
+      <div class="shell">
+        <article class="chapter-card reverse">
+          <div class="image-grid">
+            <figure class="image-frame">
+              <img data-guide-img data-shot="coachRecords" src="assets/guide-screenshots/en/iPhone_6_5/02_coach_records_schedule_reports.jpg" alt="Coach records and schedule" data-i18n-attr="alt:altCoachRecords">
+              <figcaption><span data-i18n="figCoachRecords">Coach records</span><span>03</span></figcaption>
+            </figure>
+            <figure class="image-frame">
+              <img data-guide-img data-shot="traineeTraining" src="assets/guide-screenshots/en/iPhone_6_5/06_trainee_training_coach_menu.jpg" alt="Trainee training coach menu" data-i18n-attr="alt:altTraineeTraining">
+              <figcaption><span data-i18n="figTrainee">Trainee</span><span>04</span></figcaption>
+            </figure>
+            <figure class="image-frame tablet">
+              <img data-guide-img data-device="iPad_13" data-shot="coachRecords" src="assets/guide-screenshots/en/iPad_13/02_coach_records_schedule_reports.jpg" alt="Coach records and schedule on iPad" data-i18n-attr="alt:altCoachRecords">
+              <figcaption><span data-i18n="figCoachRecords">Coach records</span><span>iPad</span></figcaption>
+            </figure>
+          </div>
+          <div class="chapter-text">
+            <p class="chapter-label" data-i18n="coachKicker">Coach and trainee</p>
+            <h2 id="coach-title" data-i18n="coachTitle">Keep coaching tied to the plan.</h2>
+            <p data-i18n="coachCopy">The coach flow separates planning from returned records. A coach can prepare menus, send a plan snapshot, review a trainee's calendar and submissions, then refine the next block without losing the original training context.</p>
+            <ul class="bullet-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="coachBulletSend">Send shared or trainee-specific plans from the coach training surface.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="coachBulletAccept">The trainee accepts a received plan, trains from a local copy, and returns completed progress.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="coachBulletReview">Coach records stay focused on schedules, returned sessions, goals, and review work.</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="analysis" class="chapter" aria-labelledby="analysis-title">
+      <div class="shell">
+        <article class="chapter-card">
+          <div class="chapter-text">
+            <p class="chapter-label" data-i18n="analysisKicker">Records and analysis</p>
+            <h2 id="analysis-title" data-i18n="analysisTitle">Read progress without guessing.</h2>
+            <p data-i18n="analysisCopy">FitRoster connects completed sessions with calendar history, interval KPIs, body data, goals, and muscle distribution. Analysis should explain what changed, not just display numbers.</p>
+            <ul class="bullet-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="analysisBulletCalendar">Use records to check what was actually completed by day, week, or month.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="analysisBulletMuscle">Use muscle distribution to see trained and under-trained areas visually.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="analysisBulletGoals">Combine goals and InBody context with workout history before changing the next plan.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="image-grid">
+            <figure class="image-frame">
+              <img data-guide-img data-shot="traineeRecords" src="assets/guide-screenshots/en/iPhone_6_5/07_trainee_records_calendar.jpg" alt="Trainee records calendar" data-i18n-attr="alt:altTraineeRecords">
+              <figcaption><span data-i18n="figRecords">Records</span><span>05</span></figcaption>
+            </figure>
+            <figure class="image-frame">
+              <img data-guide-img data-shot="traineeAnalysis" src="assets/guide-screenshots/en/iPhone_6_5/08_trainee_analysis_progress.jpg" alt="Trainee analysis progress" data-i18n-attr="alt:altTraineeAnalysis">
+              <figcaption><span data-i18n="figAnalysis">Analysis</span><span>06</span></figcaption>
+            </figure>
+            <figure class="image-frame tablet">
+              <img data-guide-img data-device="iPad_13" data-shot="traineeAnalysis" src="assets/guide-screenshots/en/iPad_13/08_trainee_analysis_progress.jpg" alt="Trainee analysis progress on iPad" data-i18n-attr="alt:altTraineeAnalysis">
+              <figcaption><span data-i18n="figAnalysis">Analysis</span><span>iPad</span></figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="callout-section" aria-labelledby="details-title">
+      <div class="shell">
+        <p class="kicker" data-i18n="detailsKicker">Operational details</p>
+        <h2 id="details-title" class="section-title" data-i18n="detailsTitle">Use FitRoster as a durable training system.</h2>
+        <div class="callout-grid">
+          <article class="callout">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <h3 data-i18n="detailSettingsTitle">Settings and language</h3>
+            <p data-i18n="detailSettingsCopy">Keep language, units, role startup, backup, diagnostics, and support links in Settings. Built-in exercise names follow the app language.</p>
+          </article>
+          <article class="callout">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 17V7m6 10V4m6 13v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <h3 data-i18n="detailAnalysisTitle">Analysis interpretation</h3>
+            <p data-i18n="detailAnalysisCopy">Use analysis to compare training load, consistency, goals, and body data over a period instead of judging a single workout alone.</p>
+          </article>
+          <article class="callout">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M5 8h14M7 16h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <h3 data-i18n="detailBackupTitle">Sync and backup</h3>
+            <p data-i18n="detailBackupCopy">Use iCloud sync for coach-trainee workflows when available, and keep FitRoster backup/export files for release-grade portability.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="shell">
+        <div class="cta-panel">
+          <div>
+            <h2 data-i18n="ctaTitle">Need product support?</h2>
+            <p data-i18n="ctaCopy">Use the support page for contact details, privacy resources, and App Store release support information.</p>
+          </div>
+          <a class="button dark" href="support.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span data-i18n="ctaButton">Open support</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <p data-i18n="footerCopy">FitRoster usage guide. Built for release documentation.</p>
+      <div class="footer-links">
+        <a href="index.html" data-i18n="footerProduct">Product page</a>
+        <a href="support.html" data-i18n="footerSupport">Support</a>
+        <a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/site-i18n.js"></script>
+  <script>
+    const screenshotFiles = {
+      coachTraining: "01_coach_training_templates.jpg",
+      trainingMenu: "06_trainee_training_coach_menu.jpg",
+      coachRecords: "02_coach_records_schedule_reports.jpg",
+      traineeTraining: "06_trainee_training_coach_menu.jpg",
+      traineeRecords: "07_trainee_records_calendar.jpg",
+      traineeAnalysis: "08_trainee_analysis_progress.jpg"
+    };
+
+    const translations = {
+      en: {
+        metaTitle: "FitRoster Usage Guide",
+        metaDescription: "FitRoster usage guide for workout plans, coach-trainee collaboration, records, analysis, backup, and settings.",
+        navAria: "Guide navigation",
+        brandAria: "FitRoster home",
+        sectionNavAria: "Guide sections",
+        languageLabel: "Language",
+        navQuick: "Start",
+        navPlans: "Plans",
+        navCoach: "Coach",
+        navAnalysis: "Analysis",
+        heroKicker: "FitRoster guide",
+        heroTitle: "Usage Guide",
+        heroCopy: "Learn the daily FitRoster flow: set up your profile, build reusable training plans, rename or create exercises, work between coach and trainee, review records, and read analysis signals.",
+        heroPrimary: "Start guide",
+        heroSecondary: "Product page",
+        summaryTitle: "What this guide covers",
+        summaryCopy: "The old in-app help was a quick checklist. This HTML guide adds image-led explanations and all release languages.",
+        summaryAria: "Guide highlights",
+        summaryPlans: "Reusable plans, custom exercises, and editable exercise names.",
+        summaryCoach: "Coach-to-trainee plan delivery, trainee acceptance, and session return.",
+        summaryAnalysis: "Records, analysis, goals, InBody context, and muscle distribution.",
+        quickTitle: "Fast start",
+        quickCopy: "Set the basics first, then use FitRoster around the same loop every time: plan, train, review, and share when coaching is involved.",
+        quickProfileTitle: "Profile and units",
+        quickProfileCopy: "Set nickname, bodyweight context, unit preference, language, and the role you want FitRoster to open into.",
+        quickPlanTitle: "Choose or build a plan",
+        quickPlanCopy: "Start from built-in templates, duplicate a menu, rename movements, or create your own exercises and routines.",
+        quickTrainTitle: "Log the session",
+        quickTrainCopy: "Record sets with load, reps, bodyweight context, and completion state. Leave unused planned items untrained.",
+        quickReviewTitle: "Review and adjust",
+        quickReviewCopy: "Use records, analysis, goals, and coach feedback to decide what should change next.",
+        plansKicker: "Plans and exercises",
+        plansTitle: "Build your training language.",
+        plansCopy: "FitRoster treats a workout menu as a reusable training structure. You can adjust exercise names freely, add your own exercises, and keep built-in names localized while custom names stay exactly as you typed them.",
+        plansBulletRename: "Rename exercise rows to match your gym, coaching vocabulary, or equipment labels.",
+        plansBulletCreate: "Create custom exercises and organize them into reusable templates or free-training menus.",
+        plansBulletSeparate: "Keep planned items separate from completed training records so history stays clean.",
+        coachKicker: "Coach and trainee",
+        coachTitle: "Keep coaching tied to the plan.",
+        coachCopy: "The coach flow separates planning from returned records. A coach can prepare menus, send a plan snapshot, review a trainee's calendar and submissions, then refine the next block without losing the original training context.",
+        coachBulletSend: "Send shared or trainee-specific plans from the coach training surface.",
+        coachBulletAccept: "The trainee accepts a received plan, trains from a local copy, and returns completed progress.",
+        coachBulletReview: "Coach records stay focused on schedules, returned sessions, goals, and review work.",
+        analysisKicker: "Records and analysis",
+        analysisTitle: "Read progress without guessing.",
+        analysisCopy: "FitRoster connects completed sessions with calendar history, interval KPIs, body data, goals, and muscle distribution. Analysis should explain what changed, not just display numbers.",
+        analysisBulletCalendar: "Use records to check what was actually completed by day, week, or month.",
+        analysisBulletMuscle: "Use muscle distribution to see trained and under-trained areas visually.",
+        analysisBulletGoals: "Combine goals and InBody context with workout history before changing the next plan.",
+        detailsKicker: "Operational details",
+        detailsTitle: "Use FitRoster as a durable training system.",
+        detailSettingsTitle: "Settings and language",
+        detailSettingsCopy: "Keep language, units, role startup, backup, diagnostics, and support links in Settings. Built-in exercise names follow the app language.",
+        detailAnalysisTitle: "Analysis interpretation",
+        detailAnalysisCopy: "Use analysis to compare training load, consistency, goals, and body data over a period instead of judging a single workout alone.",
+        detailBackupTitle: "Sync and backup",
+        detailBackupCopy: "Use iCloud sync for coach-trainee workflows when available, and keep FitRoster backup/export files for release-grade portability.",
+        ctaTitle: "Need product support?",
+        ctaCopy: "Use the support page for contact details, privacy resources, and App Store release support information.",
+        ctaButton: "Open support",
+        footerCopy: "FitRoster usage guide. Built for release documentation.",
+        footerProduct: "Product page",
+        footerSupport: "Support",
+        footerPrivacy: "Privacy Policy",
+        figTraining: "Training",
+        figCatalog: "Training menu",
+        figCoachRecords: "Coach records",
+        figTrainee: "Trainee",
+        figRecords: "Records",
+        figAnalysis: "Analysis",
+        altCoachTraining: "FitRoster coach training templates screenshot",
+        altTrainingMenu: "FitRoster training menu and coach plan screenshot",
+        altCoachRecords: "FitRoster coach records and schedule screenshot",
+        altTraineeTraining: "FitRoster trainee training menu screenshot",
+        altTraineeRecords: "FitRoster trainee records calendar screenshot",
+        altTraineeAnalysis: "FitRoster trainee analysis progress screenshot"
+      },
+      "zh-Hant": {
+        metaTitle: "FitRoster 使用說明",
+        metaDescription: "FitRoster 使用說明，涵蓋訓練課表、教練學員協作、紀錄、分析、備份與設定。",
+        navAria: "使用說明導覽",
+        brandAria: "FitRoster 首頁",
+        sectionNavAria: "使用說明章節",
+        languageLabel: "語言",
+        navQuick: "開始",
+        navPlans: "課表",
+        navCoach: "教練",
+        navAnalysis: "分析",
+        heroKicker: "FitRoster 使用說明",
+        heroTitle: "使用說明",
+        heroCopy: "了解 FitRoster 的日常流程：設定個人資料、建立可重複使用的課表、改名或自建動作、完成教練與學員互動、檢視紀錄並讀懂分析訊號。",
+        heroPrimary: "開始閱讀",
+        heroSecondary: "產品頁",
+        summaryTitle: "這份說明包含什麼",
+        summaryCopy: "舊版 App 內說明是快速檢查表。這版 HTML 會加入圖文流程與所有發布語系。",
+        summaryAria: "使用說明重點",
+        summaryPlans: "可重複使用課表、自訂動作，以及可自由修改的動作名稱。",
+        summaryCoach: "教練推送課表、學員接受課表，以及完成訓練後回傳。",
+        summaryAnalysis: "紀錄、分析、目標、InBody 背景與肌群分布。",
+        quickTitle: "快速開始",
+        quickCopy: "先設定基本資料，再用同一個訓練循環操作 FitRoster：規劃、訓練、複盤；需要教練協作時再分享與回傳。",
+        quickProfileTitle: "個人資料與單位",
+        quickProfileCopy: "設定暱稱、體重背景、單位、語言，以及你希望 FitRoster 啟動時進入的角色。",
+        quickPlanTitle: "選擇或建立課表",
+        quickPlanCopy: "從內建模板開始、複製菜單、改動作名稱，或建立自己的動作與訓練流程。",
+        quickTrainTitle: "記錄訓練",
+        quickTrainCopy: "記錄每組重量、次數、自體重背景與完成狀態。沒有訓練的預排項目不用算進紀錄。",
+        quickReviewTitle: "複盤與調整",
+        quickReviewCopy: "用紀錄、分析、目標與教練回饋判斷下一步要怎麼改。",
+        plansKicker: "課表與動作",
+        plansTitle: "建立你的訓練語言。",
+        plansCopy: "FitRoster 把課表視為可重複使用的訓練結構。你可以自由改動作名稱、新增自訂動作；內建動作會跟著 App 語言顯示，自訂名稱則會保留你輸入的文字。",
+        plansBulletRename: "把動作列改成符合健身房、教練用語或器材標籤的名稱。",
+        plansBulletCreate: "建立自訂動作，並整理成可重複使用的模板或自由訓練菜單。",
+        plansBulletSeparate: "讓預排項目與已完成訓練紀錄分開，保持歷史紀錄乾淨。",
+        coachKicker: "教練與學員",
+        coachTitle: "讓教練協作跟著課表走。",
+        coachCopy: "教練流程會把課表規劃與回傳紀錄分開。教練可以準備菜單、發送課表快照、檢查學員行事曆與回傳，再調整下一階段訓練。",
+        coachBulletSend: "從教練端訓練頁發送共通課表或學員專屬課表。",
+        coachBulletAccept: "學員接受收到的課表後，會用本機副本訓練並回傳完成進度。",
+        coachBulletReview: "教練端紀錄會專注在行事曆、學員回傳、目標與複盤工作。",
+        analysisKicker: "紀錄與分析",
+        analysisTitle: "不用猜測也能看懂進度。",
+        analysisCopy: "FitRoster 會把已完成訓練、行事曆、區間 KPI、身體資料、目標與肌群分布連在一起。分析不只是顯示數字，而是幫你理解改變。",
+        analysisBulletCalendar: "用紀錄檢查每天、每週或每月實際完成了什麼。",
+        analysisBulletMuscle: "用肌群分布視覺化看出已訓練與較少訓練的部位。",
+        analysisBulletGoals: "調整下一份課表前，把目標、InBody 背景與訓練歷史一起看。",
+        detailsKicker: "操作細節",
+        detailsTitle: "把 FitRoster 當成可長期使用的訓練系統。",
+        detailSettingsTitle: "設定與語言",
+        detailSettingsCopy: "語言、單位、角色啟動、備份、診斷與支援入口都放在設定。內建動作名稱會跟著 App 語言顯示。",
+        detailAnalysisTitle: "分析解讀",
+        detailAnalysisCopy: "用一段期間的訓練量、一致性、目標與身體數據做比較，不只看單次訓練。",
+        detailBackupTitle: "同步與備份",
+        detailBackupCopy: "可用 iCloud 同步處理教練學員流程，並保留 FitRoster 備份/匯出檔作為發布等級的資料可攜方案。",
+        ctaTitle: "需要產品支援？",
+        ctaCopy: "支援頁提供聯絡方式、隱私資源與 App Store 發布支援資訊。",
+        ctaButton: "開啟支援頁",
+        footerCopy: "FitRoster 使用說明。用於正式發布文件。",
+        footerProduct: "產品頁",
+        footerSupport: "支援",
+        footerPrivacy: "隱私權政策",
+        figTraining: "訓練",
+        figCatalog: "訓練菜單",
+        figCoachRecords: "教練紀錄",
+        figTrainee: "學員",
+        figRecords: "紀錄",
+        figAnalysis: "分析",
+        altCoachTraining: "FitRoster 教練訓練課表截圖",
+        altTrainingMenu: "FitRoster 訓練菜單與教練課表截圖",
+        altCoachRecords: "FitRoster 教練紀錄與行事曆截圖",
+        altTraineeTraining: "FitRoster 學員訓練菜單截圖",
+        altTraineeRecords: "FitRoster 學員紀錄行事曆截圖",
+        altTraineeAnalysis: "FitRoster 學員分析進度截圖"
+      },
+      "zh-Hans": {
+        metaTitle: "FitRoster 使用说明",
+        metaDescription: "FitRoster 使用说明，涵盖训练课表、教练学员协作、记录、分析、备份与设置。",
+        navAria: "使用说明导航",
+        brandAria: "FitRoster 首页",
+        sectionNavAria: "使用说明章节",
+        languageLabel: "语言",
+        navQuick: "开始",
+        navPlans: "课表",
+        navCoach: "教练",
+        navAnalysis: "分析",
+        heroKicker: "FitRoster 使用说明",
+        heroTitle: "使用说明",
+        heroCopy: "了解 FitRoster 的日常流程：设置个人资料、建立可重复使用的课表、改名或自建动作、完成教练与学员互动、查看记录并读懂分析信号。",
+        heroPrimary: "开始阅读",
+        heroSecondary: "产品页",
+        summaryTitle: "这份说明包含什么",
+        summaryCopy: "旧版 App 内说明是快速检查表。这版 HTML 会加入图文流程与所有发布语言。",
+        summaryAria: "使用说明重点",
+        summaryPlans: "可重复使用课表、自定义动作，以及可自由修改的动作名称。",
+        summaryCoach: "教练推送课表、学员接受课表，以及完成训练后回传。",
+        summaryAnalysis: "记录、分析、目标、InBody 背景与肌群分布。",
+        quickTitle: "快速开始",
+        quickCopy: "先设置基本资料，再用同一个训练循环操作 FitRoster：规划、训练、复盘；需要教练协作时再分享与回传。",
+        quickProfileTitle: "个人资料与单位",
+        quickProfileCopy: "设置昵称、体重背景、单位、语言，以及你希望 FitRoster 启动时进入的角色。",
+        quickPlanTitle: "选择或建立课表",
+        quickPlanCopy: "从内建模板开始、复制菜单、改动作名称，或建立自己的动作与训练流程。",
+        quickTrainTitle: "记录训练",
+        quickTrainCopy: "记录每组重量、次数、自体重背景与完成状态。没有训练的预排项目不用算进记录。",
+        quickReviewTitle: "复盘与调整",
+        quickReviewCopy: "用记录、分析、目标与教练反馈判断下一步要怎么改。",
+        plansKicker: "课表与动作",
+        plansTitle: "建立你的训练语言。",
+        plansCopy: "FitRoster 把课表视为可重复使用的训练结构。你可以自由改动作名称、新增自定义动作；内建动作会跟着 App 语言显示，自定义名称则会保留你输入的文字。",
+        plansBulletRename: "把动作列改成符合健身房、教练用语或器材标签的名称。",
+        plansBulletCreate: "建立自定义动作，并整理成可重复使用的模板或自由训练菜单。",
+        plansBulletSeparate: "让预排项目与已完成训练记录分开，保持历史记录干净。",
+        coachKicker: "教练与学员",
+        coachTitle: "让教练协作跟着课表走。",
+        coachCopy: "教练流程会把课表规划与回传记录分开。教练可以准备菜单、发送课表快照、检查学员日历与回传，再调整下一阶段训练。",
+        coachBulletSend: "从教练端训练页发送共通课表或学员专属课表。",
+        coachBulletAccept: "学员接受收到的课表后，会用本机副本训练并回传完成进度。",
+        coachBulletReview: "教练端记录会专注在日历、学员回传、目标与复盘工作。",
+        analysisKicker: "记录与分析",
+        analysisTitle: "不用猜测也能看懂进度。",
+        analysisCopy: "FitRoster 会把已完成训练、日历、区间 KPI、身体资料、目标与肌群分布连在一起。分析不只是显示数字，而是帮你理解改变。",
+        analysisBulletCalendar: "用记录检查每天、每周或每月实际完成了什么。",
+        analysisBulletMuscle: "用肌群分布视觉化看出已训练与较少训练的部位。",
+        analysisBulletGoals: "调整下一份课表前，把目标、InBody 背景与训练历史一起看。",
+        detailsKicker: "操作细节",
+        detailsTitle: "把 FitRoster 当成可长期使用的训练系统。",
+        detailSettingsTitle: "设置与语言",
+        detailSettingsCopy: "语言、单位、角色启动、备份、诊断与支持入口都放在设置。内建动作名称会跟着 App 语言显示。",
+        detailAnalysisTitle: "分析解读",
+        detailAnalysisCopy: "用一段期间的训练量、一致性、目标与身体数据做比较，不只看单次训练。",
+        detailBackupTitle: "同步与备份",
+        detailBackupCopy: "可用 iCloud 同步处理教练学员流程，并保留 FitRoster 备份/导出文件作为发布等级的数据可携方案。",
+        ctaTitle: "需要产品支持？",
+        ctaCopy: "支持页提供联系方式、隐私资源与 App Store 发布支持信息。",
+        ctaButton: "打开支持页",
+        footerCopy: "FitRoster 使用说明。用于正式发布文件。",
+        footerProduct: "产品页",
+        footerSupport: "支持",
+        footerPrivacy: "隐私权政策",
+        figTraining: "训练",
+        figCatalog: "训练菜单",
+        figCoachRecords: "教练记录",
+        figTrainee: "学员",
+        figRecords: "记录",
+        figAnalysis: "分析",
+        altCoachTraining: "FitRoster 教练训练课表截图",
+        altTrainingMenu: "FitRoster 训练菜单与教练课表截图",
+        altCoachRecords: "FitRoster 教练记录与日历截图",
+        altTraineeTraining: "FitRoster 学员训练菜单截图",
+        altTraineeRecords: "FitRoster 学员记录日历截图",
+        altTraineeAnalysis: "FitRoster 学员分析进度截图"
+      }
+    };
+
+    const derivedTranslations = {
+      ja: {
+        metaTitle: "FitRoster 使用ガイド",
+        metaDescription: "ワークアウト計画、コーチと受講者の連携、記録、分析、バックアップ、設定のFitRoster使用ガイド。",
+        navAria: "ガイドナビゲーション",
+        brandAria: "FitRosterホーム",
+        sectionNavAria: "ガイドセクション",
+        languageLabel: "言語",
+        navQuick: "開始",
+        navPlans: "計画",
+        navCoach: "コーチ",
+        navAnalysis: "分析",
+        heroKicker: "FitRosterガイド",
+        heroTitle: "使用ガイド",
+        heroCopy: "プロフィール設定、再利用できる計画作成、種目名の変更や独自種目、コーチと受講者の連携、記録確認、分析の読み方を学べます。",
+        heroPrimary: "ガイドを開始",
+        heroSecondary: "製品ページ",
+        summaryTitle: "このガイドの内容",
+        summaryCopy: "旧アプリ内ヘルプは簡単なチェックリストでした。このHTMLガイドは画像付き説明と全リリース言語を追加します。",
+        summaryAria: "ガイドの要点",
+        summaryPlans: "再利用できる計画、独自種目、編集できる種目名。",
+        summaryCoach: "コーチから受講者への計画送信、受講者の受け取り、セッション返却。",
+        summaryAnalysis: "記録、分析、目標、InBody情報、筋群分布。",
+        quickTitle: "クイックスタート",
+        quickCopy: "まず基本設定を整え、計画、トレーニング、確認、コーチング時の共有という同じ流れでFitRosterを使います。",
+        quickProfileTitle: "プロフィールと単位",
+        quickProfileCopy: "ニックネーム、体重情報、単位、言語、起動時に開く役割を設定します。",
+        quickPlanTitle: "計画を選ぶ、または作る",
+        quickPlanCopy: "内蔵テンプレートから始め、メニューを複製し、種目名を変更し、独自の種目やルーティンを作れます。",
+        quickTrainTitle: "セッションを記録",
+        quickTrainCopy: "重量、回数、体重情報、完了状態を記録します。実施しなかった予定項目は未実施のままにできます。",
+        quickReviewTitle: "確認して調整",
+        quickReviewCopy: "記録、分析、目標、コーチのフィードバックを使って次に変える内容を決めます。",
+        plansKicker: "計画と種目",
+        plansTitle: "自分のトレーニング言語を作る。",
+        plansCopy: "FitRosterではワークアウトメニューを再利用できるトレーニング構造として扱います。種目名は自由に調整でき、独自種目も追加できます。内蔵名はアプリ言語に従い、独自名は入力したまま保持されます。",
+        plansBulletRename: "ジム、コーチング用語、器具ラベルに合わせて種目行の名前を変更できます。",
+        plansBulletCreate: "独自種目を作成し、再利用できるテンプレートやフリートレーニングメニューに整理できます。",
+        plansBulletSeparate: "予定項目と完了したトレーニング記録を分け、履歴をきれいに保ちます。",
+        coachKicker: "コーチと受講者",
+        coachTitle: "コーチングを計画に結び付ける。",
+        coachCopy: "コーチの流れは計画作成と返却された記録を分けます。コーチはメニューを準備し、計画スナップショットを送り、受講者のカレンダーと提出内容を確認して、次のブロックを調整できます。",
+        coachBulletSend: "コーチのトレーニング画面から共有計画または受講者別計画を送信できます。",
+        coachBulletAccept: "受講者は受け取った計画を承認し、ローカルコピーでトレーニングし、完了した進捗を返します。",
+        coachBulletReview: "コーチ記録は予定、返却セッション、目標、レビュー作業に集中します。",
+        analysisKicker: "記録と分析",
+        analysisTitle: "推測せずに進捗を読む。",
+        analysisCopy: "FitRosterは完了セッション、カレンダー履歴、期間KPI、身体データ、目標、筋群分布をつなげます。分析は数字を並べるだけでなく、何が変わったかを理解するためのものです。",
+        analysisBulletCalendar: "日、週、月ごとに実際に完了した内容を記録で確認します。",
+        analysisBulletMuscle: "筋群分布で、よく鍛えた部位と不足している部位を視覚的に確認します。",
+        analysisBulletGoals: "次の計画を変える前に、目標、InBody情報、トレーニング履歴を合わせて見ます。",
+        detailsKicker: "運用の詳細",
+        detailsTitle: "FitRosterを長く使えるトレーニングシステムにする。",
+        detailSettingsTitle: "設定と言語",
+        detailSettingsCopy: "言語、単位、起動時の役割、バックアップ、診断、サポートリンクは設定にあります。内蔵種目名はアプリ言語に従います。",
+        detailAnalysisTitle: "分析の読み方",
+        detailAnalysisCopy: "1回のトレーニングだけで判断せず、一定期間の負荷、一貫性、目標、身体データを比較します。",
+        detailBackupTitle: "同期とバックアップ",
+        detailBackupCopy: "利用できる場合はiCloud同期でコーチと受講者の流れを扱い、FitRosterバックアップ/エクスポートファイルでデータの持ち運び性を保ちます。",
+        ctaTitle: "製品サポートが必要ですか？",
+        ctaCopy: "連絡先、プライバシー情報、App Storeリリース用サポート情報はサポートページにあります。",
+        ctaButton: "サポートを開く",
+        footerCopy: "FitRoster使用ガイド。リリース資料用に作成。",
+        footerProduct: "製品ページ",
+        footerSupport: "サポート",
+        footerPrivacy: "プライバシーポリシー",
+        figTraining: "トレーニング",
+        figCatalog: "トレーニングメニュー",
+        figCoachRecords: "コーチ記録",
+        figTrainee: "受講者",
+        figRecords: "記録",
+        figAnalysis: "分析",
+        altCoachTraining: "FitRosterのコーチトレーニングテンプレート画面",
+        altTrainingMenu: "FitRosterのトレーニングメニューとコーチ計画画面",
+        altCoachRecords: "FitRosterのコーチ記録と予定画面",
+        altTraineeTraining: "FitRosterの受講者トレーニングメニュー画面",
+        altTraineeRecords: "FitRosterの受講者記録カレンダー画面",
+        altTraineeAnalysis: "FitRosterの受講者分析進捗画面"
+      },
+      ko: {
+        metaTitle: "FitRoster 사용 가이드",
+        metaDescription: "운동 계획, 코치-회원 협업, 기록, 분석, 백업, 설정을 위한 FitRoster 사용 가이드.",
+        navAria: "가이드 탐색",
+        brandAria: "FitRoster 홈",
+        sectionNavAria: "가이드 섹션",
+        languageLabel: "언어",
+        navQuick: "시작",
+        navPlans: "계획",
+        navCoach: "코치",
+        navAnalysis: "분석",
+        heroKicker: "FitRoster 가이드",
+        heroTitle: "사용 가이드",
+        heroCopy: "프로필 설정, 재사용 가능한 계획 작성, 운동 이름 변경 또는 직접 생성, 코치와 회원 협업, 기록 검토, 분석 신호 읽기를 배웁니다.",
+        heroPrimary: "가이드 시작",
+        heroSecondary: "제품 페이지",
+        summaryTitle: "이 가이드의 내용",
+        summaryCopy: "기존 앱 내 도움말은 빠른 체크리스트였습니다. 이 HTML 가이드는 이미지 설명과 모든 출시 언어를 추가합니다.",
+        summaryAria: "가이드 핵심",
+        summaryPlans: "재사용 가능한 계획, 사용자 운동, 편집 가능한 운동 이름.",
+        summaryCoach: "코치의 계획 전달, 회원 수락, 세션 반환.",
+        summaryAnalysis: "기록, 분석, 목표, InBody 맥락과 근육 분포.",
+        quickTitle: "빠른 시작",
+        quickCopy: "기본 설정을 먼저 맞춘 뒤 계획, 운동, 검토, 코칭 시 공유라는 같은 흐름으로 FitRoster를 사용합니다.",
+        quickProfileTitle: "프로필과 단위",
+        quickProfileCopy: "닉네임, 체중 맥락, 단위, 언어, 시작 시 열 역할을 설정합니다.",
+        quickPlanTitle: "계획 선택 또는 생성",
+        quickPlanCopy: "내장 템플릿에서 시작하고, 메뉴를 복제하고, 운동 이름을 바꾸거나 직접 운동과 루틴을 만들 수 있습니다.",
+        quickTrainTitle: "세션 기록",
+        quickTrainCopy: "중량, 반복, 체중 맥락, 완료 상태를 기록합니다. 하지 않은 예정 항목은 미훈련 상태로 둘 수 있습니다.",
+        quickReviewTitle: "검토와 조정",
+        quickReviewCopy: "기록, 분석, 목표, 코치 피드백으로 다음에 바꿀 내용을 결정합니다.",
+        plansKicker: "계획과 운동",
+        plansTitle: "나만의 트레이닝 언어 만들기.",
+        plansCopy: "FitRoster는 운동 메뉴를 재사용 가능한 트레이닝 구조로 다룹니다. 운동 이름을 자유롭게 조정하고 직접 운동을 추가할 수 있습니다. 내장 이름은 앱 언어를 따르고 직접 입력한 이름은 그대로 유지됩니다.",
+        plansBulletRename: "헬스장, 코칭 용어, 장비 라벨에 맞게 운동 행 이름을 바꿀 수 있습니다.",
+        plansBulletCreate: "사용자 운동을 만들고 재사용 가능한 템플릿이나 자유 운동 메뉴로 정리할 수 있습니다.",
+        plansBulletSeparate: "예정 항목과 완료된 운동 기록을 분리해 기록을 깔끔하게 유지합니다.",
+        coachKicker: "코치와 회원",
+        coachTitle: "코칭을 계획에 연결하세요.",
+        coachCopy: "코치 흐름은 계획 작성과 반환된 기록을 분리합니다. 코치는 메뉴를 준비하고, 계획 스냅샷을 보내고, 회원의 캘린더와 제출 내용을 확인한 뒤 다음 블록을 조정할 수 있습니다.",
+        coachBulletSend: "코치 트레이닝 화면에서 공통 계획 또는 회원별 계획을 보낼 수 있습니다.",
+        coachBulletAccept: "회원은 받은 계획을 수락하고 로컬 복사본으로 운동한 뒤 완료 진행 상황을 반환합니다.",
+        coachBulletReview: "코치 기록은 일정, 반환 세션, 목표, 리뷰 작업에 집중합니다.",
+        analysisKicker: "기록과 분석",
+        analysisTitle: "추측 없이 진행 상황 읽기.",
+        analysisCopy: "FitRoster는 완료 세션, 캘린더 기록, 기간 KPI, 신체 데이터, 목표, 근육 분포를 연결합니다. 분석은 숫자만 보여주는 것이 아니라 무엇이 바뀌었는지 설명해야 합니다.",
+        analysisBulletCalendar: "기록에서 일, 주, 월별로 실제 완료한 내용을 확인합니다.",
+        analysisBulletMuscle: "근육 분포로 많이 훈련한 부위와 부족한 부위를 시각적으로 확인합니다.",
+        analysisBulletGoals: "다음 계획을 바꾸기 전에 목표, InBody 맥락, 운동 기록을 함께 봅니다.",
+        detailsKicker: "운영 세부 사항",
+        detailsTitle: "FitRoster를 지속 가능한 트레이닝 시스템으로 사용하세요.",
+        detailSettingsTitle: "설정과 언어",
+        detailSettingsCopy: "언어, 단위, 시작 역할, 백업, 진단, 지원 링크는 설정에 있습니다. 내장 운동 이름은 앱 언어를 따릅니다.",
+        detailAnalysisTitle: "분석 해석",
+        detailAnalysisCopy: "한 번의 운동만 보지 말고 일정 기간의 훈련량, 일관성, 목표, 신체 데이터를 비교하세요.",
+        detailBackupTitle: "동기화와 백업",
+        detailBackupCopy: "가능한 경우 iCloud 동기화로 코치-회원 흐름을 처리하고, FitRoster 백업/내보내기 파일로 데이터 이동성을 유지합니다.",
+        ctaTitle: "제품 지원이 필요하신가요?",
+        ctaCopy: "연락처, 개인정보 리소스, App Store 출시 지원 정보는 지원 페이지에서 확인하세요.",
+        ctaButton: "지원 열기",
+        footerCopy: "FitRoster 사용 가이드. 출시 문서용으로 제작.",
+        footerProduct: "제품 페이지",
+        footerSupport: "지원",
+        footerPrivacy: "개인정보 처리방침",
+        figTraining: "트레이닝",
+        figCatalog: "트레이닝 메뉴",
+        figCoachRecords: "코치 기록",
+        figTrainee: "회원",
+        figRecords: "기록",
+        figAnalysis: "분석",
+        altCoachTraining: "FitRoster 코치 트레이닝 템플릿 화면",
+        altTrainingMenu: "FitRoster 트레이닝 메뉴와 코치 계획 화면",
+        altCoachRecords: "FitRoster 코치 기록과 일정 화면",
+        altTraineeTraining: "FitRoster 회원 트레이닝 메뉴 화면",
+        altTraineeRecords: "FitRoster 회원 기록 캘린더 화면",
+        altTraineeAnalysis: "FitRoster 회원 분석 진행 화면"
+      },
+      th: {
+        metaTitle: "คู่มือการใช้งาน FitRoster",
+        metaDescription: "คู่มือ FitRoster สำหรับแผนออกกำลังกาย การทำงานร่วมกันของโค้ชและผู้ฝึก บันทึก การวิเคราะห์ การสำรองข้อมูล และการตั้งค่า",
+        navAria: "การนำทางคู่มือ",
+        brandAria: "หน้าแรก FitRoster",
+        sectionNavAria: "ส่วนของคู่มือ",
+        languageLabel: "ภาษา",
+        navQuick: "เริ่มต้น",
+        navPlans: "แผน",
+        navCoach: "โค้ช",
+        navAnalysis: "วิเคราะห์",
+        heroKicker: "คู่มือ FitRoster",
+        heroTitle: "คู่มือการใช้งาน",
+        heroCopy: "เรียนรู้ขั้นตอนประจำวันของ FitRoster ตั้งค่าโปรไฟล์ สร้างแผนที่ใช้ซ้ำ เปลี่ยนชื่อหรือสร้างท่าออกกำลังกาย ทำงานร่วมกันระหว่างโค้ชกับผู้ฝึก ตรวจบันทึก และอ่านสัญญาณการวิเคราะห์",
+        heroPrimary: "เริ่มอ่าน",
+        heroSecondary: "หน้าผลิตภัณฑ์",
+        summaryTitle: "คู่มือนี้ครอบคลุมอะไร",
+        summaryCopy: "คู่มือในแอปเดิมเป็นรายการตรวจอย่างรวดเร็ว คู่มือ HTML นี้เพิ่มคำอธิบายพร้อมรูปและทุกภาษาสำหรับการเปิดตัว",
+        summaryAria: "หัวข้อสำคัญของคู่มือ",
+        summaryPlans: "แผนที่ใช้ซ้ำได้ ท่ากำหนดเอง และชื่อท่าที่แก้ไขได้",
+        summaryCoach: "การส่งแผนจากโค้ช การรับของผู้ฝึก และการส่งคืนเซสชัน",
+        summaryAnalysis: "บันทึก วิเคราะห์ เป้าหมาย ข้อมูล InBody และการกระจายกล้ามเนื้อ",
+        quickTitle: "เริ่มต้นอย่างรวดเร็ว",
+        quickCopy: "ตั้งค่าพื้นฐานก่อน แล้วใช้ FitRoster ในวงจรเดิมทุกครั้ง: วางแผน ฝึก ทบทวน และแชร์เมื่อมีโค้ชเกี่ยวข้อง",
+        quickProfileTitle: "โปรไฟล์และหน่วย",
+        quickProfileCopy: "ตั้งชื่อเล่น ข้อมูลน้ำหนัก หน่วย ภาษา และบทบาทที่ต้องการให้ FitRoster เปิดเข้าไป",
+        quickPlanTitle: "เลือกหรือสร้างแผน",
+        quickPlanCopy: "เริ่มจากเทมเพลตในแอป คัดลอกเมนู เปลี่ยนชื่อท่า หรือสร้างท่าและรูทีนของคุณเอง",
+        quickTrainTitle: "บันทึกเซสชัน",
+        quickTrainCopy: "บันทึกน้ำหนัก จำนวนครั้ง ข้อมูลน้ำหนักตัว และสถานะเสร็จสิ้น รายการที่วางแผนไว้แต่ไม่ได้ฝึกให้คงเป็นยังไม่ได้ฝึก",
+        quickReviewTitle: "ทบทวนและปรับ",
+        quickReviewCopy: "ใช้บันทึก วิเคราะห์ เป้าหมาย และข้อเสนอแนะจากโค้ชเพื่อตัดสินใจว่าควรเปลี่ยนอะไรต่อไป",
+        plansKicker: "แผนและท่าออกกำลังกาย",
+        plansTitle: "สร้างภาษาการฝึกของคุณ",
+        plansCopy: "FitRoster มองเมนูออกกำลังกายเป็นโครงสร้างการฝึกที่ใช้ซ้ำได้ คุณสามารถแก้ชื่อท่าได้อย่างอิสระ เพิ่มท่าของคุณเอง และให้ชื่อท่าในตัวเปลี่ยนตามภาษาแอป ส่วนชื่อที่กำหนดเองจะคงตามที่พิมพ์ไว้",
+        plansBulletRename: "เปลี่ยนชื่อแถวท่าให้ตรงกับยิม คำศัพท์โค้ช หรือป้ายอุปกรณ์ของคุณ",
+        plansBulletCreate: "สร้างท่ากำหนดเองและจัดเป็นเทมเพลตหรือเมนูฝึกอิสระที่ใช้ซ้ำได้",
+        plansBulletSeparate: "แยกรายการที่วางแผนไว้ออกจากบันทึกการฝึกที่ทำเสร็จ เพื่อให้ประวัติสะอาด",
+        coachKicker: "โค้ชและผู้ฝึก",
+        coachTitle: "ให้การโค้ชเชื่อมกับแผน",
+        coachCopy: "ขั้นตอนของโค้ชแยกการวางแผนออกจากบันทึกที่ส่งกลับ โค้ชเตรียมเมนู ส่งภาพรวมแผน ตรวจปฏิทินและการส่งของผู้ฝึก แล้วปรับบล็อกถัดไปได้โดยไม่เสียบริบทเดิม",
+        coachBulletSend: "ส่งแผนร่วมกันหรือแผนเฉพาะผู้ฝึกจากหน้าฝึกของโค้ช",
+        coachBulletAccept: "ผู้ฝึกรับแผนที่ได้รับ ฝึกจากสำเนาในเครื่อง แล้วส่งความคืบหน้าที่เสร็จกลับ",
+        coachBulletReview: "บันทึกฝั่งโค้ชเน้นตาราง เซสชันที่ส่งกลับ เป้าหมาย และการทบทวน",
+        analysisKicker: "บันทึกและวิเคราะห์",
+        analysisTitle: "อ่านความก้าวหน้าโดยไม่ต้องเดา",
+        analysisCopy: "FitRoster เชื่อมเซสชันที่ทำเสร็จ ประวัติปฏิทิน KPI ตามช่วงเวลา ข้อมูลร่างกาย เป้าหมาย และการกระจายกล้ามเนื้อ การวิเคราะห์ควรช่วยอธิบายสิ่งที่เปลี่ยนไป ไม่ใช่แค่แสดงตัวเลข",
+        analysisBulletCalendar: "ใช้บันทึกเพื่อตรวจสิ่งที่ทำเสร็จจริงตามวัน สัปดาห์ หรือเดือน",
+        analysisBulletMuscle: "ใช้การกระจายกล้ามเนื้อเพื่อดูส่วนที่ฝึกมากและฝึกน้อยในรูปแบบภาพ",
+        analysisBulletGoals: "รวมเป้าหมาย ข้อมูล InBody และประวัติการฝึกก่อนเปลี่ยนแผนถัดไป",
+        detailsKicker: "รายละเอียดการใช้งาน",
+        detailsTitle: "ใช้ FitRoster เป็นระบบฝึกระยะยาว",
+        detailSettingsTitle: "การตั้งค่าและภาษา",
+        detailSettingsCopy: "ภาษา หน่วย บทบาทเริ่มต้น สำรองข้อมูล วินิจฉัย และลิงก์สนับสนุนอยู่ในตั้งค่า ชื่อท่าในตัวจะตามภาษาแอป",
+        detailAnalysisTitle: "การอ่านผลวิเคราะห์",
+        detailAnalysisCopy: "เปรียบเทียบปริมาณการฝึก ความสม่ำเสมอ เป้าหมาย และข้อมูลร่างกายในช่วงเวลา แทนการตัดสินจากการฝึกครั้งเดียว",
+        detailBackupTitle: "ซิงก์และสำรองข้อมูล",
+        detailBackupCopy: "ใช้ iCloud sync สำหรับขั้นตอนโค้ชและผู้ฝึกเมื่อพร้อมใช้งาน และเก็บไฟล์สำรอง/ส่งออกของ FitRoster เพื่อความพกพาของข้อมูล",
+        ctaTitle: "ต้องการการสนับสนุนหรือไม่",
+        ctaCopy: "ใช้หน้าสนับสนุนสำหรับช่องทางติดต่อ ข้อมูลความเป็นส่วนตัว และข้อมูลสนับสนุนการเผยแพร่ App Store",
+        ctaButton: "เปิดหน้าสนับสนุน",
+        footerCopy: "คู่มือการใช้งาน FitRoster จัดทำสำหรับเอกสารเผยแพร่",
+        footerProduct: "หน้าผลิตภัณฑ์",
+        footerSupport: "สนับสนุน",
+        footerPrivacy: "นโยบายความเป็นส่วนตัว",
+        figTraining: "การฝึก",
+        figCatalog: "เมนูฝึก",
+        figCoachRecords: "บันทึกโค้ช",
+        figTrainee: "ผู้ฝึก",
+        figRecords: "บันทึก",
+        figAnalysis: "วิเคราะห์",
+        altCoachTraining: "ภาพหน้าจอเทมเพลตฝึกฝั่งโค้ชของ FitRoster",
+        altTrainingMenu: "ภาพหน้าจอเมนูฝึกและแผนโค้ชของ FitRoster",
+        altCoachRecords: "ภาพหน้าจอบันทึกและตารางฝั่งโค้ชของ FitRoster",
+        altTraineeTraining: "ภาพหน้าจอเมนูฝึกฝั่งผู้ฝึกของ FitRoster",
+        altTraineeRecords: "ภาพหน้าจอปฏิทินบันทึกฝั่งผู้ฝึกของ FitRoster",
+        altTraineeAnalysis: "ภาพหน้าจอความก้าวหน้าการวิเคราะห์ฝั่งผู้ฝึกของ FitRoster"
+      },
+      ms: {
+        metaTitle: "Panduan Penggunaan FitRoster",
+        metaDescription: "Panduan FitRoster untuk pelan latihan, kerjasama jurulatih-pelatih, rekod, analisis, sandaran dan tetapan.",
+        navAria: "Navigasi panduan",
+        brandAria: "Laman utama FitRoster",
+        sectionNavAria: "Bahagian panduan",
+        languageLabel: "Bahasa",
+        navQuick: "Mula",
+        navPlans: "Pelan",
+        navCoach: "Jurulatih",
+        navAnalysis: "Analisis",
+        heroKicker: "Panduan FitRoster",
+        heroTitle: "Panduan Penggunaan",
+        heroCopy: "Pelajari aliran harian FitRoster: tetapkan profil, bina pelan boleh guna semula, namakan semula atau cipta senaman, bekerjasama antara jurulatih dan pelatih, semak rekod dan baca isyarat analisis.",
+        heroPrimary: "Mula panduan",
+        heroSecondary: "Halaman produk",
+        summaryTitle: "Kandungan panduan",
+        summaryCopy: "Bantuan dalam app sebelum ini ialah senarai pantas. Panduan HTML ini menambah penerangan bergambar dan semua bahasa keluaran.",
+        summaryAria: "Sorotan panduan",
+        summaryPlans: "Pelan boleh guna semula, senaman tersuai dan nama senaman boleh diedit.",
+        summaryCoach: "Penghantaran pelan jurulatih kepada pelatih, penerimaan pelatih dan pulangan sesi.",
+        summaryAnalysis: "Rekod, analisis, matlamat, konteks InBody dan taburan otot.",
+        quickTitle: "Mula pantas",
+        quickCopy: "Tetapkan asas dahulu, kemudian gunakan FitRoster dalam gelung yang sama: rancang, latihan, semak dan kongsi apabila bimbingan jurulatih terlibat.",
+        quickProfileTitle: "Profil dan unit",
+        quickProfileCopy: "Tetapkan nama panggilan, konteks berat badan, unit, bahasa dan peranan yang anda mahu FitRoster buka.",
+        quickPlanTitle: "Pilih atau bina pelan",
+        quickPlanCopy: "Mula daripada templat terbina, gandakan menu, namakan semula pergerakan atau cipta senaman dan rutin sendiri.",
+        quickTrainTitle: "Rekod sesi",
+        quickTrainCopy: "Rekod set dengan beban, ulangan, konteks berat badan dan status siap. Item rancangan yang tidak dibuat boleh kekal belum dilatih.",
+        quickReviewTitle: "Semak dan laras",
+        quickReviewCopy: "Gunakan rekod, analisis, matlamat dan maklum balas jurulatih untuk menentukan perubahan seterusnya.",
+        plansKicker: "Pelan dan senaman",
+        plansTitle: "Bina bahasa latihan anda.",
+        plansCopy: "FitRoster menganggap menu senaman sebagai struktur latihan boleh guna semula. Anda boleh mengubah nama senaman dengan bebas, menambah senaman sendiri dan membiarkan nama terbina mengikut bahasa app sementara nama tersuai kekal seperti ditaip.",
+        plansBulletRename: "Namakan semula baris senaman agar sepadan dengan gim, istilah jurulatih atau label peralatan.",
+        plansBulletCreate: "Cipta senaman tersuai dan susun dalam templat boleh guna semula atau menu latihan bebas.",
+        plansBulletSeparate: "Pisahkan item yang dirancang daripada rekod latihan siap supaya sejarah kekal bersih.",
+        coachKicker: "Jurulatih dan pelatih",
+        coachTitle: "Kekalkan bimbingan bersama pelan.",
+        coachCopy: "Aliran jurulatih memisahkan perancangan daripada rekod yang dipulangkan. Jurulatih boleh menyediakan menu, menghantar snapshot pelan, menyemak kalendar dan penyerahan pelatih, kemudian melaras blok seterusnya tanpa kehilangan konteks latihan asal.",
+        coachBulletSend: "Hantar pelan berkongsi atau khusus pelatih daripada permukaan latihan jurulatih.",
+        coachBulletAccept: "Pelatih menerima pelan, berlatih daripada salinan tempatan dan memulangkan kemajuan siap.",
+        coachBulletReview: "Rekod jurulatih kekal fokus pada jadual, sesi dipulangkan, matlamat dan semakan.",
+        analysisKicker: "Rekod dan analisis",
+        analysisTitle: "Baca kemajuan tanpa meneka.",
+        analysisCopy: "FitRoster menghubungkan sesi siap dengan sejarah kalendar, KPI julat masa, data badan, matlamat dan taburan otot. Analisis patut menjelaskan perubahan, bukan sekadar memaparkan nombor.",
+        analysisBulletCalendar: "Gunakan rekod untuk menyemak apa yang benar-benar siap mengikut hari, minggu atau bulan.",
+        analysisBulletMuscle: "Gunakan taburan otot untuk melihat kawasan yang banyak dan kurang dilatih secara visual.",
+        analysisBulletGoals: "Gabungkan matlamat dan konteks InBody dengan sejarah latihan sebelum menukar pelan seterusnya.",
+        detailsKicker: "Butiran operasi",
+        detailsTitle: "Gunakan FitRoster sebagai sistem latihan tahan lama.",
+        detailSettingsTitle: "Tetapan dan bahasa",
+        detailSettingsCopy: "Bahasa, unit, permulaan peranan, sandaran, diagnostik dan pautan sokongan berada dalam Tetapan. Nama senaman terbina mengikut bahasa app.",
+        detailAnalysisTitle: "Tafsiran analisis",
+        detailAnalysisCopy: "Bandingkan beban latihan, konsistensi, matlamat dan data badan dalam satu tempoh, bukan menilai satu latihan sahaja.",
+        detailBackupTitle: "Sync dan sandaran",
+        detailBackupCopy: "Gunakan iCloud sync untuk aliran jurulatih-pelatih apabila tersedia, dan simpan fail sandaran/eksport FitRoster untuk kebolehgerakan data.",
+        ctaTitle: "Perlukan sokongan produk?",
+        ctaCopy: "Gunakan halaman sokongan untuk butiran hubungan, sumber privasi dan maklumat sokongan keluaran App Store.",
+        ctaButton: "Buka sokongan",
+        footerCopy: "Panduan penggunaan FitRoster. Dibina untuk dokumentasi keluaran.",
+        footerProduct: "Halaman produk",
+        footerSupport: "Sokongan",
+        footerPrivacy: "Dasar Privasi",
+        figTraining: "Latihan",
+        figCatalog: "Menu latihan",
+        figCoachRecords: "Rekod jurulatih",
+        figTrainee: "Pelatih",
+        figRecords: "Rekod",
+        figAnalysis: "Analisis",
+        altCoachTraining: "Tangkapan skrin templat latihan jurulatih FitRoster",
+        altTrainingMenu: "Tangkapan skrin menu latihan dan pelan jurulatih FitRoster",
+        altCoachRecords: "Tangkapan skrin rekod dan jadual jurulatih FitRoster",
+        altTraineeTraining: "Tangkapan skrin menu latihan pelatih FitRoster",
+        altTraineeRecords: "Tangkapan skrin kalendar rekod pelatih FitRoster",
+        altTraineeAnalysis: "Tangkapan skrin kemajuan analisis pelatih FitRoster"
+      },
+      ru: {
+        metaTitle: "Руководство FitRoster",
+        metaDescription: "Руководство FitRoster по планам тренировок, связке тренер-ученик, записям, анализу, резервным копиям и настройкам.",
+        navAria: "Навигация руководства",
+        brandAria: "Главная FitRoster",
+        sectionNavAria: "Разделы руководства",
+        languageLabel: "Язык",
+        navQuick: "Старт",
+        navPlans: "Планы",
+        navCoach: "Тренер",
+        navAnalysis: "Анализ",
+        heroKicker: "Руководство FitRoster",
+        heroTitle: "Руководство",
+        heroCopy: "Освойте основной процесс FitRoster: профиль, многоразовые планы, переименование и создание упражнений, взаимодействие тренера и ученика, проверка записей и анализ.",
+        heroPrimary: "Начать",
+        heroSecondary: "Страница продукта",
+        summaryTitle: "Что входит в руководство",
+        summaryCopy: "Старая справка в приложении была коротким списком. Это HTML-руководство добавляет изображения и все языки релиза.",
+        summaryAria: "Основные темы руководства",
+        summaryPlans: "Многоразовые планы, свои упражнения и редактируемые названия упражнений.",
+        summaryCoach: "Передача плана тренером, принятие учеником и возврат сессии.",
+        summaryAnalysis: "Записи, анализ, цели, контекст InBody и распределение мышц.",
+        quickTitle: "Быстрый старт",
+        quickCopy: "Сначала настройте базовые данные, затем используйте FitRoster в одном цикле: план, тренировка, обзор и обмен при работе с тренером.",
+        quickProfileTitle: "Профиль и единицы",
+        quickProfileCopy: "Задайте имя, данные о весе, единицы, язык и роль, в которую должен открываться FitRoster.",
+        quickPlanTitle: "Выберите или создайте план",
+        quickPlanCopy: "Начните со встроенных шаблонов, скопируйте меню, переименуйте движения или создайте свои упражнения и процедуры.",
+        quickTrainTitle: "Запишите тренировку",
+        quickTrainCopy: "Записывайте подходы с весом, повторами, контекстом веса тела и статусом выполнения. Невыполненные плановые пункты оставляйте нетренированными.",
+        quickReviewTitle: "Проверьте и настройте",
+        quickReviewCopy: "Используйте записи, анализ, цели и обратную связь тренера, чтобы понять, что менять дальше.",
+        plansKicker: "Планы и упражнения",
+        plansTitle: "Создайте свой язык тренировок.",
+        plansCopy: "FitRoster рассматривает тренировочное меню как многоразовую структуру. Можно свободно менять названия упражнений, добавлять свои упражнения, а встроенные названия будут следовать языку приложения. Пользовательские названия остаются как введены.",
+        plansBulletRename: "Переименовывайте строки упражнений под зал, лексику тренера или маркировку оборудования.",
+        plansBulletCreate: "Создавайте свои упражнения и собирайте их в многоразовые шаблоны или меню свободной тренировки.",
+        plansBulletSeparate: "Отделяйте плановые пункты от завершенных записей, чтобы история оставалась чистой.",
+        coachKicker: "Тренер и ученик",
+        coachTitle: "Привяжите коучинг к плану.",
+        coachCopy: "Тренерский поток разделяет планирование и возвращенные записи. Тренер может подготовить меню, отправить снимок плана, проверить календарь и ответы ученика, а затем настроить следующий блок без потери исходного контекста.",
+        coachBulletSend: "Отправляйте общие или индивидуальные планы с тренерского экрана тренировок.",
+        coachBulletAccept: "Ученик принимает полученный план, тренируется по локальной копии и возвращает завершенный прогресс.",
+        coachBulletReview: "Записи тренера сосредоточены на расписании, возвращенных сессиях, целях и обзоре.",
+        analysisKicker: "Записи и анализ",
+        analysisTitle: "Читайте прогресс без догадок.",
+        analysisCopy: "FitRoster связывает завершенные сессии с календарем, KPI за период, данными тела, целями и распределением мышц. Анализ должен объяснять изменения, а не просто показывать числа.",
+        analysisBulletCalendar: "Используйте записи, чтобы проверить фактически выполненное по дням, неделям или месяцам.",
+        analysisBulletMuscle: "Используйте распределение мышц, чтобы визуально видеть тренированные и недотренированные зоны.",
+        analysisBulletGoals: "Перед изменением следующего плана объединяйте цели, контекст InBody и историю тренировок.",
+        detailsKicker: "Рабочие детали",
+        detailsTitle: "Используйте FitRoster как долговечную тренировочную систему.",
+        detailSettingsTitle: "Настройки и язык",
+        detailSettingsCopy: "Язык, единицы, стартовая роль, резервные копии, диагностика и ссылки поддержки находятся в Настройках. Встроенные названия упражнений следуют языку приложения.",
+        detailAnalysisTitle: "Интерпретация анализа",
+        detailAnalysisCopy: "Сравнивайте нагрузку, стабильность, цели и данные тела за период, а не оценивайте только одну тренировку.",
+        detailBackupTitle: "Синхронизация и резервные копии",
+        detailBackupCopy: "Используйте iCloud sync для процессов тренер-ученик, когда это доступно, и храните файлы резервных копий/экспорта FitRoster для переносимости данных.",
+        ctaTitle: "Нужна поддержка?",
+        ctaCopy: "На странице поддержки есть контакты, ресурсы конфиденциальности и информация для релиза App Store.",
+        ctaButton: "Открыть поддержку",
+        footerCopy: "Руководство FitRoster. Подготовлено для релизной документации.",
+        footerProduct: "Страница продукта",
+        footerSupport: "Поддержка",
+        footerPrivacy: "Политика конфиденциальности",
+        figTraining: "Тренировка",
+        figCatalog: "Меню тренировки",
+        figCoachRecords: "Записи тренера",
+        figTrainee: "Ученик",
+        figRecords: "Записи",
+        figAnalysis: "Анализ",
+        altCoachTraining: "Скриншот тренерских шаблонов FitRoster",
+        altTrainingMenu: "Скриншот тренировочного меню и плана тренера FitRoster",
+        altCoachRecords: "Скриншот записей и расписания тренера FitRoster",
+        altTraineeTraining: "Скриншот тренировочного меню ученика FitRoster",
+        altTraineeRecords: "Скриншот календаря записей ученика FitRoster",
+        altTraineeAnalysis: "Скриншот прогресса анализа ученика FitRoster"
+      },
+      de: {
+        metaTitle: "FitRoster Nutzungshandbuch",
+        metaDescription: "FitRoster-Handbuch für Trainingspläne, Coach-Trainee-Zusammenarbeit, Aufzeichnungen, Analyse, Backup und Einstellungen.",
+        navAria: "Handbuchnavigation",
+        brandAria: "FitRoster Startseite",
+        sectionNavAria: "Handbuchabschnitte",
+        languageLabel: "Sprache",
+        navQuick: "Start",
+        navPlans: "Pläne",
+        navCoach: "Coach",
+        navAnalysis: "Analyse",
+        heroKicker: "FitRoster Handbuch",
+        heroTitle: "Nutzungshandbuch",
+        heroCopy: "Lerne den FitRoster-Alltag: Profil einrichten, wiederverwendbare Pläne bauen, Übungen umbenennen oder erstellen, Coach und Trainee verbinden, Aufzeichnungen prüfen und Analyse lesen.",
+        heroPrimary: "Handbuch starten",
+        heroSecondary: "Produktseite",
+        summaryTitle: "Inhalt dieses Handbuchs",
+        summaryCopy: "Die alte App-Hilfe war eine kurze Checkliste. Dieses HTML-Handbuch ergänzt Bildanleitungen und alle Release-Sprachen.",
+        summaryAria: "Handbuch-Highlights",
+        summaryPlans: "Wiederverwendbare Pläne, eigene Übungen und bearbeitbare Übungsnamen.",
+        summaryCoach: "Planübergabe vom Coach, Annahme durch Trainees und Rückgabe von Sessions.",
+        summaryAnalysis: "Aufzeichnungen, Analyse, Ziele, InBody-Kontext und Muskelverteilung.",
+        quickTitle: "Schnellstart",
+        quickCopy: "Richte zuerst die Grundlagen ein und nutze FitRoster dann immer im gleichen Ablauf: planen, trainieren, prüfen und bei Coaching teilen.",
+        quickProfileTitle: "Profil und Einheiten",
+        quickProfileCopy: "Lege Spitzname, Körpergewichtsbezug, Einheiten, Sprache und die Startrolle fest.",
+        quickPlanTitle: "Plan wählen oder bauen",
+        quickPlanCopy: "Starte mit integrierten Vorlagen, dupliziere ein Menü, benenne Bewegungen um oder erstelle eigene Übungen und Routinen.",
+        quickTrainTitle: "Session erfassen",
+        quickTrainCopy: "Erfasse Sätze mit Last, Wiederholungen, Körpergewichtsbezug und Abschlussstatus. Nicht ausgeführte Planpunkte bleiben untrainiert.",
+        quickReviewTitle: "Prüfen und anpassen",
+        quickReviewCopy: "Nutze Aufzeichnungen, Analyse, Ziele und Coach-Feedback, um die nächste Anpassung zu entscheiden.",
+        plansKicker: "Pläne und Übungen",
+        plansTitle: "Baue deine Trainingssprache.",
+        plansCopy: "FitRoster behandelt ein Workout-Menü als wiederverwendbare Trainingsstruktur. Du kannst Übungsnamen frei ändern, eigene Übungen hinzufügen und integrierte Namen lokalisiert anzeigen lassen, während eigene Namen exakt erhalten bleiben.",
+        plansBulletRename: "Benenne Übungszeilen passend zu deinem Studio, Coaching-Vokabular oder Geräteschild um.",
+        plansBulletCreate: "Erstelle eigene Übungen und organisiere sie in wiederverwendbaren Vorlagen oder freien Trainingsmenüs.",
+        plansBulletSeparate: "Halte geplante Punkte getrennt von abgeschlossenen Trainingsaufzeichnungen, damit die Historie sauber bleibt.",
+        coachKicker: "Coach und Trainee",
+        coachTitle: "Coaching bleibt am Plan.",
+        coachCopy: "Der Coach-Flow trennt Planung von zurückgegebenen Aufzeichnungen. Ein Coach kann Menüs vorbereiten, einen Plan-Snapshot senden, Kalender und Rückmeldungen prüfen und den nächsten Block anpassen, ohne den ursprünglichen Kontext zu verlieren.",
+        coachBulletSend: "Sende geteilte oder trainee-spezifische Pläne aus der Coach-Trainingsfläche.",
+        coachBulletAccept: "Der Trainee nimmt einen erhaltenen Plan an, trainiert mit lokaler Kopie und gibt den fertigen Fortschritt zurück.",
+        coachBulletReview: "Coach-Aufzeichnungen konzentrieren sich auf Zeitpläne, zurückgegebene Sessions, Ziele und Review-Arbeit.",
+        analysisKicker: "Aufzeichnungen und Analyse",
+        analysisTitle: "Fortschritt ohne Raten lesen.",
+        analysisCopy: "FitRoster verbindet abgeschlossene Sessions mit Kalenderhistorie, Zeitraum-KPIs, Körperdaten, Zielen und Muskelverteilung. Analyse soll erklären, was sich geändert hat, nicht nur Zahlen anzeigen.",
+        analysisBulletCalendar: "Nutze Aufzeichnungen, um zu prüfen, was pro Tag, Woche oder Monat wirklich abgeschlossen wurde.",
+        analysisBulletMuscle: "Nutze Muskelverteilung, um trainierte und untertrainierte Bereiche visuell zu erkennen.",
+        analysisBulletGoals: "Kombiniere Ziele und InBody-Kontext mit der Trainingshistorie, bevor du den nächsten Plan änderst.",
+        detailsKicker: "Betriebsdetails",
+        detailsTitle: "Nutze FitRoster als dauerhaftes Trainingssystem.",
+        detailSettingsTitle: "Einstellungen und Sprache",
+        detailSettingsCopy: "Sprache, Einheiten, Rollenstart, Backup, Diagnose und Supportlinks liegen in den Einstellungen. Integrierte Übungsnamen folgen der App-Sprache.",
+        detailAnalysisTitle: "Analyse auswerten",
+        detailAnalysisCopy: "Vergleiche Trainingslast, Konsistenz, Ziele und Körperdaten über einen Zeitraum, statt eine einzelne Einheit isoliert zu bewerten.",
+        detailBackupTitle: "Sync und Backup",
+        detailBackupCopy: "Nutze iCloud sync für Coach-Trainee-Abläufe, wenn verfügbar, und behalte FitRoster Backup-/Exportdateien für portable Daten.",
+        ctaTitle: "Brauchst du Support?",
+        ctaCopy: "Auf der Supportseite findest du Kontaktdaten, Datenschutzressourcen und App Store Release-Support.",
+        ctaButton: "Support öffnen",
+        footerCopy: "FitRoster Nutzungshandbuch. Für Release-Dokumentation erstellt.",
+        footerProduct: "Produktseite",
+        footerSupport: "Support",
+        footerPrivacy: "Datenschutzrichtlinie",
+        figTraining: "Training",
+        figCatalog: "Trainingsmenü",
+        figCoachRecords: "Coach-Aufzeichnungen",
+        figTrainee: "Trainee",
+        figRecords: "Aufzeichnungen",
+        figAnalysis: "Analyse",
+        altCoachTraining: "FitRoster Screenshot mit Coach-Trainingsvorlagen",
+        altTrainingMenu: "FitRoster Screenshot mit Trainingsmenü und Coach-Plan",
+        altCoachRecords: "FitRoster Screenshot mit Coach-Aufzeichnungen und Zeitplan",
+        altTraineeTraining: "FitRoster Screenshot mit Trainee-Trainingsmenü",
+        altTraineeRecords: "FitRoster Screenshot mit Trainee-Aufzeichnungskalender",
+        altTraineeAnalysis: "FitRoster Screenshot mit Trainee-Analysefortschritt"
+      },
+      fr: {
+        metaTitle: "Guide d'utilisation FitRoster",
+        metaDescription: "Guide FitRoster pour les plans, la collaboration coach-élève, les dossiers, l'analyse, la sauvegarde et les réglages.",
+        navAria: "Navigation du guide",
+        brandAria: "Accueil FitRoster",
+        sectionNavAria: "Sections du guide",
+        languageLabel: "Langue",
+        navQuick: "Départ",
+        navPlans: "Plans",
+        navCoach: "Coach",
+        navAnalysis: "Analyse",
+        heroKicker: "Guide FitRoster",
+        heroTitle: "Guide d'utilisation",
+        heroCopy: "Apprenez le flux FitRoster quotidien : configurer le profil, créer des plans réutilisables, renommer ou créer des exercices, collaborer entre coach et élève, lire les dossiers et l'analyse.",
+        heroPrimary: "Commencer",
+        heroSecondary: "Page produit",
+        summaryTitle: "Ce que couvre ce guide",
+        summaryCopy: "L'ancienne aide intégrée était une checklist rapide. Ce guide HTML ajoute des explications visuelles et toutes les langues de sortie.",
+        summaryAria: "Points clés du guide",
+        summaryPlans: "Plans réutilisables, exercices personnalisés et noms d'exercices modifiables.",
+        summaryCoach: "Envoi de plan par le coach, acceptation par l'élève et retour de session.",
+        summaryAnalysis: "Dossiers, analyse, objectifs, contexte InBody et répartition musculaire.",
+        quickTitle: "Démarrage rapide",
+        quickCopy: "Configurez d'abord les bases, puis utilisez FitRoster dans la même boucle : planifier, s'entraîner, relire et partager quand le coaching intervient.",
+        quickProfileTitle: "Profil et unités",
+        quickProfileCopy: "Définissez le surnom, le contexte de poids corporel, les unités, la langue et le rôle d'ouverture de FitRoster.",
+        quickPlanTitle: "Choisir ou créer un plan",
+        quickPlanCopy: "Commencez avec les modèles intégrés, dupliquez un menu, renommez les mouvements ou créez vos propres exercices et routines.",
+        quickTrainTitle: "Enregistrer la séance",
+        quickTrainCopy: "Enregistrez les séries avec charge, répétitions, contexte de poids corporel et état de fin. Les éléments prévus non faits restent non entraînés.",
+        quickReviewTitle: "Relire et ajuster",
+        quickReviewCopy: "Utilisez les dossiers, l'analyse, les objectifs et les retours du coach pour décider du prochain changement.",
+        plansKicker: "Plans et exercices",
+        plansTitle: "Construisez votre langage d'entraînement.",
+        plansCopy: "FitRoster traite un menu d'entraînement comme une structure réutilisable. Vous pouvez modifier librement les noms d'exercices, ajouter vos propres exercices et garder les noms intégrés localisés tandis que les noms personnalisés restent tels que saisis.",
+        plansBulletRename: "Renommez les lignes d'exercices selon votre salle, votre vocabulaire de coaching ou les libellés d'équipement.",
+        plansBulletCreate: "Créez des exercices personnalisés et organisez-les en modèles réutilisables ou menus d'entraînement libre.",
+        plansBulletSeparate: "Séparez les éléments prévus des dossiers d'entraînement terminés pour garder l'historique propre.",
+        coachKicker: "Coach et élève",
+        coachTitle: "Gardez le coaching lié au plan.",
+        coachCopy: "Le flux coach sépare la planification des dossiers retournés. Un coach peut préparer des menus, envoyer un instantané de plan, revoir le calendrier et les retours d'un élève, puis ajuster le bloc suivant sans perdre le contexte.",
+        coachBulletSend: "Envoyez des plans partagés ou propres à un élève depuis la surface d'entraînement coach.",
+        coachBulletAccept: "L'élève accepte un plan reçu, s'entraîne depuis une copie locale et retourne la progression terminée.",
+        coachBulletReview: "Les dossiers coach restent centrés sur les horaires, les séances retournées, les objectifs et la relecture.",
+        analysisKicker: "Dossiers et analyse",
+        analysisTitle: "Lire le progrès sans deviner.",
+        analysisCopy: "FitRoster relie les séances terminées à l'historique calendrier, aux KPI par période, aux données corporelles, aux objectifs et à la répartition musculaire. L'analyse doit expliquer ce qui change, pas seulement afficher des chiffres.",
+        analysisBulletCalendar: "Utilisez les dossiers pour vérifier ce qui a réellement été terminé par jour, semaine ou mois.",
+        analysisBulletMuscle: "Utilisez la répartition musculaire pour voir visuellement les zones entraînées et moins entraînées.",
+        analysisBulletGoals: "Combinez objectifs, contexte InBody et historique d'entraînement avant de modifier le prochain plan.",
+        detailsKicker: "Détails opérationnels",
+        detailsTitle: "Utilisez FitRoster comme système d'entraînement durable.",
+        detailSettingsTitle: "Réglages et langue",
+        detailSettingsCopy: "Langue, unités, rôle d'ouverture, sauvegarde, diagnostics et liens support sont dans Réglages. Les noms d'exercices intégrés suivent la langue de l'app.",
+        detailAnalysisTitle: "Interprétation de l'analyse",
+        detailAnalysisCopy: "Comparez charge, régularité, objectifs et données corporelles sur une période plutôt que de juger une seule séance.",
+        detailBackupTitle: "Synchronisation et sauvegarde",
+        detailBackupCopy: "Utilisez iCloud sync pour les flux coach-élève quand disponible, et gardez les fichiers de sauvegarde/export FitRoster pour la portabilité.",
+        ctaTitle: "Besoin de support ?",
+        ctaCopy: "La page support contient les contacts, les ressources de confidentialité et les informations de support App Store.",
+        ctaButton: "Ouvrir le support",
+        footerCopy: "Guide d'utilisation FitRoster. Conçu pour la documentation de sortie.",
+        footerProduct: "Page produit",
+        footerSupport: "Support",
+        footerPrivacy: "Politique de confidentialité",
+        figTraining: "Entraînement",
+        figCatalog: "Menu d'entraînement",
+        figCoachRecords: "Dossiers coach",
+        figTrainee: "Élève",
+        figRecords: "Dossiers",
+        figAnalysis: "Analyse",
+        altCoachTraining: "Capture FitRoster des modèles d'entraînement coach",
+        altTrainingMenu: "Capture FitRoster du menu d'entraînement et du plan coach",
+        altCoachRecords: "Capture FitRoster des dossiers et horaires coach",
+        altTraineeTraining: "Capture FitRoster du menu d'entraînement élève",
+        altTraineeRecords: "Capture FitRoster du calendrier de dossiers élève",
+        altTraineeAnalysis: "Capture FitRoster de la progression d'analyse élève"
+      },
+      es: {
+        metaTitle: "Guía de uso de FitRoster",
+        metaDescription: "Guía de FitRoster para planes de entrenamiento, colaboración entrenador-alumno, registros, análisis, copias y ajustes.",
+        navAria: "Navegación de la guía",
+        brandAria: "Inicio de FitRoster",
+        sectionNavAria: "Secciones de la guía",
+        languageLabel: "Idioma",
+        navQuick: "Inicio",
+        navPlans: "Planes",
+        navCoach: "Entrenador",
+        navAnalysis: "Análisis",
+        heroKicker: "Guía de FitRoster",
+        heroTitle: "Guía de uso",
+        heroCopy: "Aprende el flujo diario de FitRoster: configurar perfil, crear planes reutilizables, renombrar o crear ejercicios, colaborar entre entrenador y alumno, revisar registros y leer señales de análisis.",
+        heroPrimary: "Empezar guía",
+        heroSecondary: "Página del producto",
+        summaryTitle: "Qué cubre esta guía",
+        summaryCopy: "La ayuda anterior era una lista rápida. Esta guía HTML añade explicaciones con imágenes y todos los idiomas de lanzamiento.",
+        summaryAria: "Puntos clave de la guía",
+        summaryPlans: "Planes reutilizables, ejercicios propios y nombres de ejercicios editables.",
+        summaryCoach: "Envío de plan por el entrenador, aceptación del alumno y devolución de sesión.",
+        summaryAnalysis: "Registros, análisis, objetivos, contexto InBody y distribución muscular.",
+        quickTitle: "Inicio rápido",
+        quickCopy: "Configura lo básico primero y usa FitRoster con el mismo ciclo: planificar, entrenar, revisar y compartir cuando haya coaching.",
+        quickProfileTitle: "Perfil y unidades",
+        quickProfileCopy: "Configura apodo, contexto de peso corporal, unidades, idioma y el rol con el que quieres abrir FitRoster.",
+        quickPlanTitle: "Elegir o crear un plan",
+        quickPlanCopy: "Empieza con plantillas integradas, duplica un menú, renombra movimientos o crea tus propios ejercicios y rutinas.",
+        quickTrainTitle: "Registrar sesión",
+        quickTrainCopy: "Registra series con carga, repeticiones, contexto de peso corporal y estado de finalización. Deja sin entrenar los elementos planificados no usados.",
+        quickReviewTitle: "Revisar y ajustar",
+        quickReviewCopy: "Usa registros, análisis, objetivos y feedback del entrenador para decidir qué cambiar después.",
+        plansKicker: "Planes y ejercicios",
+        plansTitle: "Crea tu lenguaje de entrenamiento.",
+        plansCopy: "FitRoster trata un menú de entrenamiento como una estructura reutilizable. Puedes ajustar nombres de ejercicios libremente, añadir tus propios ejercicios y mantener los nombres integrados localizados mientras los personalizados quedan como los escribiste.",
+        plansBulletRename: "Renombra filas de ejercicios para adaptarlas a tu gimnasio, vocabulario de coaching o etiquetas de equipo.",
+        plansBulletCreate: "Crea ejercicios propios y organízalos en plantillas reutilizables o menús de entrenamiento libre.",
+        plansBulletSeparate: "Mantén separados los elementos planificados de los registros completados para que el historial esté limpio.",
+        coachKicker: "Entrenador y alumno",
+        coachTitle: "Mantén el coaching unido al plan.",
+        coachCopy: "El flujo del entrenador separa la planificación de los registros devueltos. Un entrenador puede preparar menús, enviar una captura del plan, revisar calendario y entregas del alumno, y ajustar el siguiente bloque sin perder contexto.",
+        coachBulletSend: "Envía planes compartidos o específicos del alumno desde la superficie de entrenamiento del entrenador.",
+        coachBulletAccept: "El alumno acepta un plan recibido, entrena desde una copia local y devuelve el progreso completado.",
+        coachBulletReview: "Los registros del entrenador se centran en horarios, sesiones devueltas, objetivos y revisión.",
+        analysisKicker: "Registros y análisis",
+        analysisTitle: "Lee el progreso sin adivinar.",
+        analysisCopy: "FitRoster conecta sesiones completadas con historial de calendario, KPI por intervalo, datos corporales, objetivos y distribución muscular. El análisis debe explicar qué cambió, no solo mostrar números.",
+        analysisBulletCalendar: "Usa registros para comprobar qué se completó realmente por día, semana o mes.",
+        analysisBulletMuscle: "Usa distribución muscular para ver zonas entrenadas y poco entrenadas de forma visual.",
+        analysisBulletGoals: "Combina objetivos y contexto InBody con historial de entrenamiento antes de cambiar el siguiente plan.",
+        detailsKicker: "Detalles operativos",
+        detailsTitle: "Usa FitRoster como sistema de entrenamiento duradero.",
+        detailSettingsTitle: "Ajustes e idioma",
+        detailSettingsCopy: "Idioma, unidades, rol inicial, copias, diagnósticos y enlaces de soporte están en Ajustes. Los nombres integrados siguen el idioma de la app.",
+        detailAnalysisTitle: "Interpretación del análisis",
+        detailAnalysisCopy: "Compara carga, consistencia, objetivos y datos corporales durante un periodo en vez de juzgar una sola sesión.",
+        detailBackupTitle: "Sincronización y copias",
+        detailBackupCopy: "Usa iCloud sync para flujos entrenador-alumno cuando esté disponible y conserva archivos de copia/exportación FitRoster para portabilidad.",
+        ctaTitle: "¿Necesitas soporte?",
+        ctaCopy: "Usa la página de soporte para contacto, privacidad e información de soporte de lanzamiento App Store.",
+        ctaButton: "Abrir soporte",
+        footerCopy: "Guía de uso de FitRoster. Creada para documentación de lanzamiento.",
+        footerProduct: "Página del producto",
+        footerSupport: "Soporte",
+        footerPrivacy: "Política de privacidad",
+        figTraining: "Entrenamiento",
+        figCatalog: "Menú de entrenamiento",
+        figCoachRecords: "Registros del entrenador",
+        figTrainee: "Alumno",
+        figRecords: "Registros",
+        figAnalysis: "Análisis",
+        altCoachTraining: "Captura de plantillas de entrenamiento de entrenador en FitRoster",
+        altTrainingMenu: "Captura de menú de entrenamiento y plan de entrenador en FitRoster",
+        altCoachRecords: "Captura de registros y horario del entrenador en FitRoster",
+        altTraineeTraining: "Captura de menú de entrenamiento del alumno en FitRoster",
+        altTraineeRecords: "Captura del calendario de registros del alumno en FitRoster",
+        altTraineeAnalysis: "Captura del progreso de análisis del alumno en FitRoster"
+      }
+    };
+
+    const fallbackKeys = [
+      "summaryAria", "summaryPlans", "summaryCoach", "summaryAnalysis",
+      "quickCopy", "quickProfileTitle", "quickProfileCopy", "quickPlanTitle", "quickPlanCopy",
+      "quickTrainTitle", "quickTrainCopy", "quickReviewTitle", "quickReviewCopy",
+      "plansKicker", "plansCopy", "plansBulletRename", "plansBulletCreate", "plansBulletSeparate",
+      "coachKicker", "coachCopy", "coachBulletSend", "coachBulletAccept", "coachBulletReview",
+      "analysisKicker", "analysisCopy", "analysisBulletCalendar", "analysisBulletMuscle", "analysisBulletGoals",
+      "detailsKicker", "detailsTitle", "detailSettingsTitle", "detailSettingsCopy",
+      "detailAnalysisTitle", "detailAnalysisCopy", "detailBackupTitle", "detailBackupCopy",
+      "ctaCopy", "footerCopy", "footerProduct", "footerSupport", "footerPrivacy",
+      "figTraining", "figCatalog", "figCoachRecords", "figTrainee", "figRecords", "figAnalysis",
+      "altCoachTraining", "altTrainingMenu", "altCoachRecords", "altTraineeTraining", "altTraineeRecords", "altTraineeAnalysis"
+    ];
+
+    for (const [language, partial] of Object.entries(derivedTranslations)) {
+      translations[language] = { ...translations.en, ...partial };
+      for (const key of fallbackKeys) {
+        translations[language][key] = partial[key] || translations.en[key];
+      }
+    }
+
+    const supportedLanguages = Object.keys(translations);
+    const metaDescription = document.querySelector('meta[name="description"]');
+
+    function valueFor(dictionary, key) {
+      return dictionary[key] || translations.en[key] || "";
+    }
+
+    function imagePath(language, shot, device = "iPhone_6_5") {
+      return `assets/guide-screenshots/${language}/${device}/${screenshotFiles[shot]}`;
+    }
+
+    function setLanguage(language) {
+      const activeLanguage = supportedLanguages.includes(language) ? language : "en";
+      const dictionary = translations[activeLanguage] || translations.en;
+
+      document.documentElement.lang = activeLanguage;
+      document.documentElement.dataset.language = activeLanguage;
+      document.title = valueFor(dictionary, "metaTitle");
+      metaDescription.setAttribute("content", valueFor(dictionary, "metaDescription"));
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = valueFor(dictionary, element.dataset.i18n);
+      });
+
+      document.querySelectorAll("[data-i18n-attr]").forEach((element) => {
+        element.dataset.i18nAttr.split(",").forEach((pair) => {
+          const [attribute, key] = pair.split(":");
+          if (attribute && key) {
+            element.setAttribute(attribute.trim(), valueFor(dictionary, key.trim()));
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-guide-img]").forEach((image) => {
+        image.dataset.fallbackStage = "primary";
+        image.src = imagePath(activeLanguage, image.dataset.shot, image.dataset.device || "iPhone_6_5");
+      });
+
+      localStorage.setItem("fitroster.marketing.language", activeLanguage);
+      window.FITROSTER_SITE_I18N.updateLanguageSelect(activeLanguage);
+    }
+
+    document.querySelectorAll("[data-guide-img]").forEach((image) => {
+      image.addEventListener("error", () => {
+        if (image.dataset.fallbackStage === "primary") {
+          image.dataset.fallbackStage = "en";
+          image.src = imagePath("en", image.dataset.shot, image.dataset.device || "iPhone_6_5");
+        } else if (image.dataset.fallbackStage === "en") {
+          image.dataset.fallbackStage = "zh-Hant";
+          image.src = imagePath("zh-Hant", image.dataset.shot, image.dataset.device || "iPhone_6_5");
+        }
+      });
+    });
+
+    window.FITROSTER_SITE_I18N.mountLanguageSelect(supportedLanguages, setLanguage);
+    setLanguage(window.FITROSTER_SITE_I18N.preferredLanguage(supportedLanguages));
+  </script>
+</body>
+</html>
