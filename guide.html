@@ -104,17 +104,31 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-size: 17px;
+      gap: 12px;
+      padding: 6px 12px 6px 7px;
+      border: 1px solid rgba(29, 29, 31, 0.10);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      font-size: 18px;
       font-weight: 760;
       white-space: nowrap;
+      transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .brand:hover,
+    .brand:focus-visible {
+      border-color: rgba(0, 113, 227, 0.28);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 10px 28px rgba(0, 113, 227, 0.12);
     }
 
     .brand img {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      object-fit: cover;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
     }
 
     .nav-links {
@@ -718,6 +732,15 @@
         display: none;
       }
 
+      .brand {
+        padding: 5px;
+      }
+
+      .brand img {
+        width: 40px;
+        height: 40px;
+      }
+
       .language-field span {
         position: absolute;
         width: 1px;
@@ -803,7 +826,7 @@
   <header class="topbar">
     <nav class="nav" aria-label="Guide navigation" data-i18n-attr="aria-label:navAria">
       <a class="brand" href="index.html" aria-label="FitRoster home" data-i18n-attr="aria-label:brandAria">
-        <img src="assets/start-silver-fitroster.png" width="34" height="34" alt="">
+        <img src="assets/fitroster-brand-icon.webp" width="256" height="256" alt="">
         <span>FitRoster</span>
       </a>
       <div class="nav-links">
