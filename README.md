@@ -30,6 +30,7 @@ Deploy target:
 Language behavior:
 
 - The pages detect `navigator.languages` and map supported locales to the closest available FitRoster language.
+- Pages can request a specific language with `?lang=<locale>`, for example `guide.html?lang=zh-Hant`.
 - Manual language selection is available from the top navigation and is saved in `localStorage` under `fitroster.marketing.language`.
 
 Usage-guide screenshots:

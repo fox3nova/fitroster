@@ -38,6 +38,13 @@
   }
 
   function preferredLanguage(supportedLanguages) {
+    const requestedLanguage = normalizeLanguage(new URLSearchParams(window.location.search).get("lang")
+      || new URLSearchParams(window.location.search).get("language")
+      || new URLSearchParams(window.location.search).get("locale"));
+    if (supportedLanguages.includes(requestedLanguage)) {
+      return requestedLanguage;
+    }
+
     const stored = localStorage.getItem("fitroster.marketing.language");
     const normalizedStored = normalizeLanguage(stored);
     if (supportedLanguages.includes(normalizedStored)) {
