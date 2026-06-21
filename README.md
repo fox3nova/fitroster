@@ -11,7 +11,7 @@ Current structure:
 - `assets/site-i18n.js` provides shared language metadata, browser-language detection, manual language switching, and the added multilingual copy used by all three pages.
 - `assets/marketing/<locale>/` stores slim localized JPEG screenshots used by the public product page.
 - `assets/start-silver-fitroster.png` is the release logo asset copied from `Import Data/FitRoster Logo/start_silver_fitroster.PNG`.
-- `assets/guide-screenshots/<locale>/` stores localized screenshots used by the HTML usage guide.
+- `assets/guide-tutorial/<locale>/` stores slim localized screenshots used by the detailed HTML usage tutorial.
 
 Open locally:
 
@@ -35,5 +35,5 @@ Language behavior:
 Usage-guide screenshots:
 
 - Run `Scripts/capture_release_screenshots.py` with the built simulator app to write App Store screenshots, manual screenshots, and the website guide screenshot copy.
-- Website guide screenshots are copied to `assets/guide-screenshots/<locale>/<device>/`.
-- The HTML guide uses the selected site language and each image's device target to load matching iPhone and iPad screenshot folders.
+- Website guide screenshots can be converted into slim JPG files under `assets/guide-tutorial/<locale>/`.
+- The HTML guide uses the selected site language to load matching localized tutorial screenshots, with a shared analysis image where the current localized analysis capture would expose internal keys.
