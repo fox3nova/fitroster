@@ -9,10 +9,9 @@ Current structure:
 - `support.html` is the public App Store support page with contact, FAQ, usage-guide, product, and privacy links in the same language set.
 - `privacy.html` is the public App Store privacy policy page with the same multilingual language structure.
 - `assets/site-i18n.js` provides shared language metadata, browser-language detection, manual language switching, and the added multilingual copy used by all three pages.
-- `assets/iphone-*.jpg` and `assets/ipad-*.jpg` are complete screenshots captured from the running FitRoster iOS Simulator build. The iPad screenshots are landscape captures for release-page presentation.
+- `assets/marketing/<locale>/` stores slim localized JPEG screenshots used by the public product page.
 - `assets/start-silver-fitroster.png` is the release logo asset copied from `Import Data/FitRoster Logo/start_silver_fitroster.PNG`.
 - `assets/guide-screenshots/<locale>/` stores localized screenshots used by the HTML usage guide.
-- `assets/guides/` stores legacy usage-guide PDFs. The Traditional Chinese PDF remains available as an archive while the release guide moves to HTML.
 
 Open locally:
 
@@ -38,8 +37,3 @@ Usage-guide screenshots:
 - Run `Scripts/capture_release_screenshots.py` with the built simulator app to write App Store screenshots, manual screenshots, and the website guide screenshot copy.
 - Website guide screenshots are copied to `assets/guide-screenshots/<locale>/<device>/`.
 - The HTML guide uses the selected site language and each image's device target to load matching iPhone and iPad screenshot folders.
-
-Adding future usage-guide PDF archives:
-
-- Put the localized PDF in `assets/guides/`.
-- Keep the locale naming explicit, for example `FitRoster_User_Guide_en.pdf` or `FitRoster_User_Guide_zh-Hans.pdf`.
