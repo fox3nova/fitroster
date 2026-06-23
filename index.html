@@ -873,7 +873,7 @@
           <div class="hero-brand-lockup">
             <img src="assets/fitroster-wordmark.webp" width="920" height="614" alt="" aria-hidden="true">
             <div class="promo-banner">
-              <img src="assets/marketing/shared/limited-free-banner-en.webp" width="1881" height="836" alt="Limited-time free offer banner" data-promo-banner data-i18n-attr="alt:promoBannerAlt">
+              <img src="assets/marketing/shared/limited-free-banner-en.webp" width="1280" height="426" alt="Limited-time free offer banner" data-promo-banner data-i18n-attr="alt:promoBannerAlt">
             </div>
           </div>
           <p class="kicker" data-i18n="heroKicker">iOS training workspace</p>
@@ -1949,19 +1949,66 @@
       return imageLocales.has(language) ? language : "en";
     }
 
-    function promoBannerAsset(language) {
-      if (language === "zh-Hant") {
-        return {
-          src: "assets/marketing/shared/limited-free-banner.webp",
-          width: 2172,
-          height: 724
-        };
-      }
-      return {
+    const promoBannerAssets = {
+      en: {
         src: "assets/marketing/shared/limited-free-banner-en.webp",
-        width: 1881,
-        height: 836
-      };
+        width: 1280,
+        height: 426
+      },
+      "zh-Hant": {
+        src: "assets/marketing/shared/limited-free-banner.webp",
+        width: 2172,
+        height: 724
+      },
+      "zh-Hans": {
+        src: "assets/marketing/shared/limited-free-banner-zh-Hans.webp",
+        width: 1280,
+        height: 426
+      },
+      ja: {
+        src: "assets/marketing/shared/limited-free-banner-ja.webp",
+        width: 1280,
+        height: 426
+      },
+      ko: {
+        src: "assets/marketing/shared/limited-free-banner-ko.webp",
+        width: 1280,
+        height: 426
+      },
+      th: {
+        src: "assets/marketing/shared/limited-free-banner-th.webp",
+        width: 1280,
+        height: 426
+      },
+      ms: {
+        src: "assets/marketing/shared/limited-free-banner-ms.webp",
+        width: 1280,
+        height: 426
+      },
+      ru: {
+        src: "assets/marketing/shared/limited-free-banner-ru.webp",
+        width: 1280,
+        height: 426
+      },
+      de: {
+        src: "assets/marketing/shared/limited-free-banner-de.webp",
+        width: 1280,
+        height: 426
+      },
+      fr: {
+        src: "assets/marketing/shared/limited-free-banner-fr.webp",
+        width: 1280,
+        height: 426
+      },
+      es: {
+        src: "assets/marketing/shared/limited-free-banner-es.webp",
+        width: 1280,
+        height: 426
+      }
+    };
+
+    function promoBannerAsset(language) {
+      return promoBannerAssets[language] || promoBannerAssets.en;
     }
 
     function updateMarketingImages(language) {
