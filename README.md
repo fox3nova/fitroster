@@ -37,4 +37,4 @@ Usage-guide screenshots:
 
 - Run `Scripts/capture_release_screenshots.py` with the built simulator app to write App Store screenshots, manual screenshots, and the website guide screenshot copy.
 - Website guide screenshots can be converted into slim JPG files under `assets/guide-tutorial/<locale>/`.
-- The HTML guide uses the selected site language to load matching localized tutorial screenshots, with a shared analysis image where the current localized analysis capture would expose internal keys.
+- The HTML guide uses the selected site language to load matching localized tutorial screenshots.
